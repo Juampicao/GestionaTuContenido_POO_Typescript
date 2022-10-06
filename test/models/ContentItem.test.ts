@@ -1,3 +1,4 @@
+import { IContentType } from "../../app/interfaces/Interfaces";
 import { ContentItem } from "../../app/models/ContentItem";
 
 describe('Escenario 01 - Test ContentItem ', () => {
@@ -21,7 +22,7 @@ describe('Escenario 01 - Test ContentItem ', () => {
         contenido1.title = "Angular";
         contenido1.description = "Aprende Angular de 0 a 100";
         contenido1.tags = ["Angular", "Typescript"];
-        contenido1.contentType = "video";
+        contenido1.contentType = IContentType.video;
 
         expect(contenido1).not.toBeNull()
      });
@@ -46,6 +47,12 @@ describe('Escenario 01 - Test ContentItem ', () => {
         expect(contenido1.tags).toContain("React")
      });
     
+     test('Caso 1.5 - Crear ContentItem Empty, deberia contentType = video.', () => {
+        
+        let contenido1 = new ContentItem()
+       
+        expect(contenido1.contentType).toBe("video")
+     });
 
 })
 

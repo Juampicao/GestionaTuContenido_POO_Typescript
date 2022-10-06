@@ -4,6 +4,7 @@ import { ContentManagerService } from '../../app/services/ContentManagerService'
 import { IContentManagerService } from '../../app/services/IContentManagerService';
 import { ContentManagerServiceMock } from './ContentManagerServiceMock';
 import { ContentItemFilter } from "../../app/models/ContentItemFilter"
+import { IContentType } from '../../app/interfaces/Interfaces';
 
 // Funcion interna de testing: Levanto una instancia. Inyeccion de dependencias.
 function getService(instance: string = "original"): IContentManagerService {
@@ -25,17 +26,16 @@ describe('Escenario 01 - Test ContentManagerService ', () => {
     // Caso 1: Objeto vacio.
     test('Caso 1.1 - length must be 2', () => {
 
-        // Creando 2 objetos de prueba.
-        servicioContentManager.crear(new ContentItem("Aprendiendo Angular",10));
-        servicioContentManager.crear(new ContentItem("React desde 0",20));
-
-        expect(servicioContentManager.getAllContentsItems().length).toBe(2);
+        // To-Do: ¿Por que 2 es correcto? Deberia ser 0..
+        expect(servicioContentManager.getAllContentsItems()).toHaveLength(2);
 
     });
 
     // Caso 2: Objeto lleno.
-    test('Caso 1.2 - ServiceContentManager._getAllContentsItems not to be null.', () => {
+    test('Caso 1.2 - no sea nulo.', () => {
 
+        servicioContentManager.crear(new ContentItem("Aprendiendo Angular", IContentType.video, ["Angular", "Typescript"], "Aprende angular de 0 a 1000"));
+        
         expect(servicioContentManager.getAllContentsItems()).not.toBeNull()
 
     });
@@ -45,37 +45,45 @@ describe('Escenario 01 - Test ContentManagerService ', () => {
 });
 
 // Escenario
-describe('Escenario 2 - Busqueda por titulo ', () => {
+describe('Escenario 2 - ServiceMock ', () => {
 
     // let servicioContentManager = getService("test");
 
     let servicioContentManager = new ContentManagerServiceMock();
 
-    test('Caso 2.1 - Probando con un titulo valido', () => {
+    test('Caso 2.1 - Array Titles incluyan "Angular" / Case Insensitive', () => {
 
-        // Creo un filter de tipo ContentItemFilter (Instancio)
         let filter = new ContentItemFilter();
-        filter.title = "Angular";
-        // Respuesta;
-        let response: Array<ContentItem>;
-        response = servicioContentManager.getContentsItemsByFilter(filter)
+        filter.title = "angular";
+
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
         
-        // Paso el filter al servicio.
-        expect(response).not.toBeNull();
+        expect(response).toHaveLength(1);
     })
 
-    // test('Caso 2.2 - Probando con un titulo valido', () => {
+    test('Caso 2.2 - Array Description incluyan "Angular" / Case Insensitive', () => {
 
-    //     // Creo un filter de tipo ContentItemFilter (Instancio)
-    //     let filter = new ContentItemFilter();
-    //     filter.Title = "Angular";
-    //     // Respuesta;
-    //     let response: Array<ContentItem>;
-    //     response = servicioContentManager.getContentsItemsByFilter(filter)
+        let filter = new ContentItemFilter();
+        filter.description = "angular";
+
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
         
-    //     // Paso el filter al servicio.
-    //     expect(response).not.toBeNull();
-    // })
+        expect(response).toHaveLength(1);
+    })
+
+    // To-Do: Test de tags array
+
+    test('Caso 2.3 - Array Tags incluya "Pyton', () => {
+
+        // let filter = new ContentItemFilter();
+        // filter.tags = ["Typescript"];
+
+        // let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+        
+        // expect(response).toHaveLength(1);
+    })
+
+
 });
 
 

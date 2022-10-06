@@ -101,3 +101,5 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   }
 }
+
+// Finish : tipado de typescript, que me lo pida o me tire error & Punto  y coma. 

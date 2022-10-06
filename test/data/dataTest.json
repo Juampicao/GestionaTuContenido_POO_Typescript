@@ -1,0 +1,22 @@
+{
+  "contentItems": [
+    {
+      "title": "Angular",
+      "description": "Aprende Angular de 0 a 100",
+      "tags": ["Angular", "Typescript"],
+      "contentType": "video"
+    },
+    {
+      "title": "React",
+      "description": "Convierte en un master de React",
+      "tags": ["React", "Javascript"],
+      "contentType": "articulo"
+    },
+    {
+      "title": "Java",
+      "description": "El mejor curso de java",
+      "tags": ["Java"],
+      "contentType": "video"
+    }
+  ]
+}

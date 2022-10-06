@@ -1,26 +1,22 @@
-export class ContentItemFilter {
-   
-    // To - DO Agregar Content Type & Descripcion // Quitar duration.
+import { IContentType } from "../interfaces/Interfaces";
 
-    // To - Do Quitar uppercase en los set.
-
-    // To - DO agregar los get a cada atributo.
-    
+export class ContentItemFilter {    
+ 
     private _title: string;
-    private _contentType: string; 
+    private _contentType!: IContentType; 
     private _tags: string[];
     private _description: string;
     
     constructor() {
         this._title = "";
-        this._contentType = "";
+        this._contentType = IContentType.void;
         this._tags = [];
         this._description = "";
     }
 
     // Title
     set title(title: string) {
-        this._title = title;
+        this._title = title.toLocaleLowerCase();
     }
 
     get title() {
@@ -28,7 +24,7 @@ export class ContentItemFilter {
     }
 
     // ContentType
-    set contentType(contentType: string) {
+    set contentType(contentType: IContentType) {
         this._contentType = contentType;
     }
 
@@ -47,7 +43,7 @@ export class ContentItemFilter {
 
     // Description
     set description(description: string) {
-        this._description = description;
+        this._description = description.toLocaleLowerCase();
     }
 
     get description() {
