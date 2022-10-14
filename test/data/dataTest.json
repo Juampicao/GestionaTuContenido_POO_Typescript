@@ -4,7 +4,7 @@
       "title": "Angular",
       "description": "Aprende Angular de 0 a 100",
       "tags": ["Angular", "Typescript"],
-      "contentType": "video"
+      "contentType": "Video"
     },
     {
       "title": "React",
@@ -16,7 +16,7 @@
       "title": "Java",
       "description": "El mejor curso de java",
       "tags": ["Java"],
-      "contentType": "video"
+      "contentType": "Video"
     }
   ]
 }

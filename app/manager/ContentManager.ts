@@ -2,7 +2,10 @@ import { IContentManagerService } from "../services/IContentManagerService";
 import { CustomLogger } from "../utils/CustomLogger";
 import { ContentItem } from "../models/ContentItem";
 import { ContentItemFilter } from "../models/ContentItemFilter";
-import { IContentType } from "../interfaces/Interfaces";
+import { IContentItemRating } from "../interfaces/IContentItemRating";
+import { IContentType } from "../interfaces/IContentType";
+import { Duration } from "../models/Duration";
+import { FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxRatingFilter, minDurationSince, minRatingFilter } from "../utils/ConfigurationENV";
 
 export class ContentManager {
 
@@ -36,15 +39,18 @@ export class ContentManager {
         return response; 
     }
 
-    // To-Do: Option por varios filtros.. (pensar mas de)
-     // Title or Descripcion
-    getContentsItemsByManyFilter(title: string = "", description: string = "", contentType: IContentType = IContentType.void, tag: string[] = []): Array<ContentItem> {
+    //Todo: 2 filtros juntos.
+
+    // Title or Descripcion
+    getContentsItemsByManyFilter(title: string = "", description: string = "", contentType: IContentType = IContentType.Void, tag: string[] = []): Array<ContentItem> {
         const filter = new ContentItemFilter();
         filter.title = title;           
         let response: Array<ContentItem> = []; 
         response = this._iContentManagerService.getContentsItemsByFilter(filter);
         this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
         this._customLog.logDebug(`Devolviendo ${response}`);
+
+        this._customLog.logInfo(`Mostrando Filter ${filter}`)
         return response; 
     }
 
@@ -70,11 +76,58 @@ export class ContentManager {
         return response; 
     }
 
-    
+    // Duration
+    // ? Como duration o como number?  
 
-    // Finish: Agregar los otros filtros que faltan (type, tags, description) Completar la US1 con esto. 
-    // To-do Caso 1: Tengo que agregarle titleOrDescription al mismo de arriba. Agregarle logica para cumplir con lo pedido.
-    // Pensar siempre en perfomance.
+    getContentsItemByDuration(durationSince: Duration = minDurationSince, durationUntil: Duration = maxDurationUntil): Array<ContentItem> {
+
+        const filter = new ContentItemFilter();
+    
+        this._customLog.logDebug(`ContentManager, La durationSince=${durationSince.getDuration()} y durationUntil ${durationUntil.getDuration()}.`)
+        
+        filter.durationSince = durationSince;
+        filter.durationUntil = durationUntil; 
+
+        let response: Array<ContentItem> = []; 
+
+        response = this._iContentManagerService.getContentsItemsByFilter(filter);
+        
+        return response
+
+    }
+
+
+    // To-Do Filtro by rating : Test
+    getContentsItemByRating(ratingSince: IContentItemRating = minRatingFilter, ratingUntil: IContentItemRating = maxRatingFilter): Array<ContentItem> {  
+
+        this._customLog.logDebug(`desde getContentItemByRating. ratingSince=${ratingSince} & ratingUntil=${ratingUntil}`)
+        const filter = new ContentItemFilter();
+        filter.ratingSince = ratingSince; 
+        filter.ratingUntil = ratingUntil;           
+        
+        let response: Array<ContentItem> = []; 
+
+        response = this._iContentManagerService.getContentsItemsByFilter(filter);
+     
+        return response; 
+    }
+
+
+    // ToDo Filtro by fecha de creacion + Test
+    getContentsItemByFechaCreacion(fechaCreacionSince: Date = FechaCreacionSinceDefault, fechaCreacionUntil: Date = FechaCreacionUntilDefault): Array<ContentItem> {  
+
+        this._customLog.logDebug(`desde getContentItemFechaCreacion. fechaCreacionSince=${fechaCreacionSince} & fechaCreacionUntil=${fechaCreacionUntil}`)
+        
+        const filter = new ContentItemFilter();
+        filter.fechaCreacionSince = fechaCreacionSince;
+        filter.fechaCreacionUntil = fechaCreacionUntil;
+        
+        let response: Array<ContentItem> = []; 
+
+        response = this._iContentManagerService.getContentsItemsByFilter(filter);
+     
+        return response; 
+    }
 
 }
 
