@@ -1,5 +1,7 @@
 import { ErrorExternoAlPasarParams } from "../../app/error/NoHayResultadosError";
 import { IContentItemRating } from "../../app/interfaces/IContentItemRating";
+import { IContentType } from "../../app/interfaces/IContentType";
+import { ContentItem } from "../../app/models/ContentItem";
 import { ContentItemFilter } from "../../app/models/ContentItemFilter";
 import { Duration } from "../../app/models/Duration";
 import { FechaCreacionSinceDefault, FechaCreacionUntilDefault } from "../../app/utils/ConfigurationENV";
@@ -49,6 +51,35 @@ describe('Escenario 1 - ContentItemFilter - TITLE ', () => {
 
 // ? CONTENT TYPE
 describe('Escenario 2 - ContentItemFilter - CONTENTTYPE ', () => {
+    
+    // Filter = ContentType.
+    test('Caso 2.1 - Buscar por contentType.', () => {
+
+        let contenido1 = new ContentItem();
+        contenido1.contentType = IContentType.Video; 
+
+        let filter = new ContentItemFilter();
+        filter.contentType = IContentType.Video;
+        
+        let response = contenido1.contentType;
+
+        expect(response).toBe(filter.contentType);
+    })
+
+    // Diferente a 
+    test('Caso 2.2 - Diferente a Video.', () => {
+
+        let contenido1 = new ContentItem();
+        contenido1.contentType = IContentType.Article; 
+
+        let filter = new ContentItemFilter();
+        filter.contentType = IContentType.Video;
+        
+        let response = contenido1.contentType;
+
+        expect(response).not.toBe(filter.contentType);
+    })
+
 
 });
 
@@ -102,7 +133,7 @@ describe('Escenario 3 - ContentItemFilter - TAGS ', () => {
 // ? DESCRIPTION
 describe('Escenario 4 - ContentItemFilter - DESCRIPTION ', () => {
 
-     // Descripcion con mayusculas y minusculas.
+    // Crear descripcion case-senstivie.
     test('Caso 4.1 - Crear Filter con descripcion "El mEJor dE ToDOS"- Case sensitive.', () => {
 
         let filter = new ContentItemFilter();
@@ -112,6 +143,18 @@ describe('Escenario 4 - ContentItemFilter - DESCRIPTION ', () => {
         expect(response).toBe("el mejor de todos");
     })
 
+
+    // containDescription false. 
+    test('Caso 4.2 - Filter containDescription - False -  Case sensitive.', () => {
+        let contenido1 = new ContentItem(); 
+        contenido1.description = "No es el mejor de todos"
+
+        let filter = new ContentItemFilter();
+        filter.description = "Not found";
+        
+        let response = contenido1.containDescription(filter.description)       
+        expect(response).toBeFalsy();
+    })
 });
 
 
@@ -207,8 +250,6 @@ describe('Escenario 6 - ContentItemFilter - RATING ', () => {
         expect(filterSince).toBe(3);
         expect(filterUntil).toBe(5);
     })
-    
-
 });
 
 describe('Escenario 7 - ContentItemFilter - FECHA CREACION ', () => {

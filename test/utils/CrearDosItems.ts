@@ -13,13 +13,10 @@ export class CrearDosItems {
     constructor() {
 
         this._contentItems = [];
-
-        // this._contenido1 = new ContentItem("Aprendiendo Angular", IContentType.Video, ["Angular", "Typescript"], "Convierte angular de 0 a 1000"), new Duration().setDuration(1,10,0), IContentItemRating.Cinco;
         
-        this._contenido1 = new ContentItem("Aprendiendo Angular", IContentType.Video, ["Angular", "Typescript"], "Convierte angular de 0 a 1000");
+        this._contenido1 = new ContentItem("Aprendiendo Angular", IContentType.Video, ["Angular", "Typescript"], "Convierte angular de 0 a 1000 - programacion");
         
-        // this._contenido2 = new ContentItem("React", IContentType.Article, ["React", "Javascript"], "Convierte en un experto de react"), new Duration().setDuration(0,60,30), IContentItemRating.Cuatro;
-        this._contenido2 = new ContentItem("React", IContentType.Article, ["React", "Javascript"], "Convierte en un experto de react");
+        this._contenido2 = new ContentItem("React", IContentType.Article, ["React", "Javascript"], "Convierte en un experto de react - programacion");
     }
 
 
@@ -67,3 +64,4 @@ export class CrearDosItems {
      
    
 }
+

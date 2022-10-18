@@ -28,6 +28,35 @@ export class ContentManager {
         return response; 
     }
 
+    // Description
+    getContentsItemsByDescription(description: string): Array<ContentItem> {
+        const filter = new ContentItemFilter();
+        filter.description = description;           
+        let response: Array<ContentItem> = []; 
+        response = this._iContentManagerService.getContentsItemsByFilter(filter);
+        this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
+        this._customLog.logDebug(`Devolviendo ${response}`);
+        return response; 
+    }
+
+    /**
+     * 
+     * @param words string (title or description)
+     * @returns Lista con titulos or descriptions que coincidan estrictamente con la palabra.
+     */
+    // Title or Description
+    getContentsItemsByTitleOrDescription(words: string): Array<ContentItem> {
+        // Crear un filtro.title y un filtro.description con la misma palabra, va a buscar por ambos.
+        const filter = new ContentItemFilter();
+        filter.description = words;           
+        filter.title = words;
+        let response: Array<ContentItem> = []; 
+        response = this._iContentManagerService.getContentsItemsByFilter(filter);
+        this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
+        this._customLog.logDebug(`Devolviendo ${response}`);
+        return response; 
+    }
+
     // ContentType
     getContentsItemsByContentType(contentType: IContentType): Array<ContentItem> {
         const filter = new ContentItemFilter();
@@ -36,21 +65,6 @@ export class ContentManager {
         response = this._iContentManagerService.getContentsItemsByFilter(filter);
         this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
         this._customLog.logDebug(`Devolviendo ${response}`);
-        return response; 
-    }
-
-    //Todo: 2 filtros juntos.
-
-    // Title or Descripcion
-    getContentsItemsByManyFilter(title: string = "", description: string = "", contentType: IContentType = IContentType.Void, tag: string[] = []): Array<ContentItem> {
-        const filter = new ContentItemFilter();
-        filter.title = title;           
-        let response: Array<ContentItem> = []; 
-        response = this._iContentManagerService.getContentsItemsByFilter(filter);
-        this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
-        this._customLog.logDebug(`Devolviendo ${response}`);
-
-        this._customLog.logInfo(`Mostrando Filter ${filter}`)
         return response; 
     }
 
@@ -65,20 +79,10 @@ export class ContentManager {
         return response; 
     }
 
-    // Description
-    getContentsItemsByDescription(description: string): Array<ContentItem> {
-        const filter = new ContentItemFilter();
-        filter.description = description;           
-        let response: Array<ContentItem> = []; 
-        response = this._iContentManagerService.getContentsItemsByFilter(filter);
-        this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
-        this._customLog.logDebug(`Devolviendo ${response}`);
-        return response; 
-    }
+
 
     // Duration
     // ? Como duration o como number?  
-
     getContentsItemByDuration(durationSince: Duration = minDurationSince, durationUntil: Duration = maxDurationUntil): Array<ContentItem> {
 
         const filter = new ContentItemFilter();

@@ -161,9 +161,8 @@ export class ContentItemFilter {
     
     
     // ToString
-    // ToDo tostring..
     toString() : string {
-        return `ContentItemFilter: title=${this._title} , description=${this._description} , et..` 
+        return `ContentItemFilter: title=${this._title} , description=${this._description}, contentType=${this._contentType}, durationSince=${this._durationSince}, durationUntil=${this._durationUntil}, fechaCreacionSince=${this._fechaCreacionSince}, fechaCreacionUntil=${this._fechaCreacionUntil}, ratingSince=${this._ratingSince}, ratingUntil=${this._ratingUntil}, tags=${this._tags}` 
     }
 
     // ToDo: Convertilo a json.
@@ -172,7 +171,7 @@ export class ContentItemFilter {
 
 
 
-// Todo: Fecha creacion no puedo no inicairlizar, por que en ts.config esta puesto que me lo pida.
+// // Todo: Fecha creacion no puedo no inicairlizar, por que en ts.config esta puesto que me lo pida.
 // Tip: Siempre el hueso. Donde parar el paginado? el hueso.
 // Servicio retorna la lista, el paginado lo recibe, y lo escupe al front.
 // Todo: Paginado. Pararme en el hueso. Bajo nivel.

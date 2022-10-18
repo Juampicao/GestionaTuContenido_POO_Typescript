@@ -1,7 +1,7 @@
 import { ErrorExternoAlPasarParams } from "../error/NoHayResultadosError";
 import { IContentType } from "../interfaces/IContentType";
 import { IContentItemRating } from "../interfaces/IContentItemRating";
-import { fechaCreacionDefault, FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxDurationVideo, maxFechaCreacion, maxFechaCreacionSince, maxRatingFilter, minDurationVideo, minFechaCreacion, minFechaCreacionSince, minRatingFilter } from "../utils/ConfigurationENV";
+import { contentTypeDefault, fechaCreacionDefault, FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxDurationVideo, maxFechaCreacion, maxFechaCreacionSince, maxRatingFilter, minDurationSince, minDurationVideo, minFechaCreacion, minFechaCreacionSince, minRatingFilter, RatingDefault } from "../utils/ConfigurationENV";
 import { CustomLogger } from "../utils/CustomLogger";
 import { Duration } from "./Duration";
 
@@ -17,7 +17,7 @@ export class ContentItem {
     private _rating: IContentItemRating;
     private _fechaCreacion: Date;
     
-    constructor(title: string = "", contentType: IContentType = IContentType.Video, tags: Array<string> = [], description: string = "", duration: Duration = new Duration(), rating: IContentItemRating = IContentItemRating.Void,
+    constructor(title: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], description: string = "", duration: Duration = new Duration(), rating: IContentItemRating = RatingDefault,
         fechaCreacion: Date = fechaCreacionDefault
     ) {
         this._title = title;
@@ -47,6 +47,8 @@ export class ContentItem {
         return this._contentType
     }
 
+    
+
     // Tags
     set tags(tags: string[]) {
         this._tags = tags;
@@ -58,9 +60,9 @@ export class ContentItem {
     
     addTag(tag: string) {
 
-        if (this._tags.toString().includes(tag)) {
+        if (this._tags.toString().toLocaleLowerCase().includes(tag)) {
             customLogger.logDebug("Ya existe esta etiqueta")
-            return
+            throw new ErrorExternoAlPasarParams(`Ya existe esta etiqueta`)
         } else {
             this._tags.push(tag);
         }
@@ -130,6 +132,30 @@ export class ContentItem {
         return this._description
     }
 
+    /**
+     * Verifica si contiene al menos una palabra.
+     * 
+     * @param description: string 
+     * @returns Boolean
+     */
+    containDescription(description : string): Boolean {
+                
+        let descriptionArray = description.split(" ")
+        let thisDescription = this._description.split(" ")
+
+        console.log("descriptionArray=", descriptionArray, "thisDescription=", thisDescription)
+        
+        for (let i = 0; i < descriptionArray.length; i++) {
+            for (let j = 0; j < thisDescription.length; j++) {
+                if (descriptionArray[i].toLowerCase() === thisDescription[j].toLowerCase()) {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+        
     
     // Duration
     /**
@@ -155,11 +181,11 @@ export class ContentItem {
      * @param durationUntil type Duration, default MaxDurationUntil
      * @returns Boolean
      */
-    duracionMaximaUntil: Duration = maxDurationUntil;     
-    containsItemsBetweenTwoDurations(durationSince: Duration, durationUntil: Duration = this.duracionMaximaUntil): Boolean {
+    
+    containsItemsBetweenTwoDurations(durationSince: Duration = minDurationSince, durationUntil: Duration = maxDurationUntil): Boolean {
             
         // Since > Until, throw Error.
-        if ( durationUntil !== undefined &&  durationSince > durationUntil) {
+        if ( durationUntil !== undefined && durationSince > durationUntil) {
             throw new ErrorExternoAlPasarParams((`Since: ${durationSince} , no puede ser menor a Until: ${durationUntil} .`))
         }
 
@@ -278,55 +304,8 @@ export class ContentItem {
         return false;       
     }
 
+    toString(): string {
+        return `ContentItem: Title=${this._title}, ContentType=${this._contentType}, Duration=${this._duration}, fechaCreacion=${this._fechaCreacion}, rating=${this._rating}, tags=${this._tags}, descripcion=${this._description}`
+    }
 };
 
-
-/**
- * HACER HOY
- 
- * Todo: 1) ToJson y ToString
- *             - ContentItem.
- *             - COntentItemFilter.
- * TOdo: 2) Ordenar test
- *    - // //  ContentItemTest
- *    - // // ContentItemFilterTest
- *    - ContentManagerTest
- *    - ServicioTest
- * 
- * Todo 3) Ordenar comentarios de funciones importentes, quitar codigo extra. Luego los cambio, ordenar
- * Todo 4) Comentarios lindos explicativos en funciones importantes
- * 
- * todo 5) Duration
- *          Todo Extra: 1 solo params en el servicioMock
- *          ? Un minimo y un maximo. Archivo externo con los max y min. Cuidar la aplicacion. Throw error de tipo?
- *          - Debe recibir solo 1 parametros los filtros.
- *          - Test con 1 parametros
- *          - Pasar a ContentFilter
- *          - Pasar a ContentManager
- *          - Pasar a ServicioMock
- *          ! Cada test es por nivel, el problema esta ahi. No ir mas arriba para solucionar el test.
- * 
- *  todo 5) Rating
- *         ? Supocision, Si recibo 2, es de 2 al maximo. Plantear y testear cada caso.
- *          - Debe recibir solo 1 parametros los filtros.
- *          - Test con 1 parametros
- *          - Pasar a ContentFilter
-  *          - Pasar a ContentManager
-  *          - Pasar a ServicioMock
-  *          ! Cada test es por nivel, el problema esta ahi. No ir mas arriba para solucionar el test.
-  * 
-  * todo 5) Fecha Creacion
-  *         ? Una fecha de since y until. Recibir fecha larga y fecha corta. 
-  *         ? Iniciar FilterFecha con void.
-  *          - Debe recibir solo 1 parametros los filtros.
-  *          - Test con 1 parametros
-  *          - Pasar a ContentFilter
-  *          - Pasar a ContentManager
-  *          - Pasar a ServicioMock
-  *          ! Un minimo
-  * 
-  *  HACER MANAÑA
-    // Todo: Paginacion. Aparte, con test. Despues con IContentService
-    // Todo: Crear una clase "CustomErrorManager" => Get Error Message. adentro crea un throw new error, con el mensaje que pongo aca.
-    // Todo: separar interface ICOntetnType de la otra, archivos separados.
- */ 

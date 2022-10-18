@@ -8,6 +8,7 @@ import { IContentType } from '../../app/interfaces/IContentType';
 import { Duration } from '../../app/models/Duration';
 import { CustomLogger } from '../../app/utils/CustomLogger';
 import { NoHayResultadosError } from '../../app/error/NoHayResultadosError';
+import { maxDurationSince } from '../../app/utils/ConfigurationENV';
 
 // Funcion interna de testing: Levanto una instancia. Inyeccion de dependencias.
 function getService(instance: string = "original"): IContentManagerService {
@@ -142,27 +143,25 @@ describe('Escenario 3 - ServiceMock  - Duration', () => {
         filter.durationSince.setDuration(0, 0, 10); // 10 segundos.
 
         filter.durationUntil = new Duration();
-        filter.durationUntil.setDuration(1, 0, 0); // 60 minutos.
+        filter.durationUntil.setDuration(2, 0, 0); // 60 minutos.
         
         let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
         
-        expect(response).toHaveLength(1);
+        expect(response).toHaveLength(2);
     })
 
-     test('Caso 3.3 - mayores a 120 minutos / expect Error', () => {
+     test('Caso 3.3 - mayores 3 horas / expect Error', () => {
 
         try {
             let filter = new ContentItemFilter();
-            
-            filter.durationSince = new Duration();
-            filter.durationSince.setDuration(2, 0, 0); // 60 minutos.
+            filter.durationSince.setDuration(4) // 60 minutos.
             
             let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
             
-            expect(response).toHaveLength(0);
+            expect(response).toHaveLength(1);
         } catch (error) {
             
-            expect(error).toBeInstanceOf(NoHayResultadosError)
+            expect(error).toBeInstanceOf(Error)
 
         }
         
@@ -205,5 +204,7 @@ describe('Escenario 6 - ServiceMock  - Fecha Creacion', () => {
 
     // Error de Since
 });
+
+
 
 

@@ -3,8 +3,9 @@ import { IContentItemRating } from "../../app/interfaces/IContentItemRating";
 import { IContentType } from "../../app/interfaces/IContentType";
 import { ContentItem } from "../../app/models/ContentItem";
 import { Duration } from "../../app/models/Duration";
-import { fechaCreacionDefault, FechaCreacionSinceDefault } from "../../app/utils/ConfigurationENV";
+import { contentTypeDefault, fechaCreacionDefault, FechaCreacionSinceDefault, RatingDefault } from "../../app/utils/ConfigurationENV";
 import { CustomLogger } from "../../app/utils/CustomLogger";
+import { CrearDosItems } from "../utils/CrearDosItems";
 /**
  * 1) Title
  * 2) ContentType
@@ -36,19 +37,21 @@ describe('Escenario 01 - Test ContentItem - TITLE', () => {
 
 describe('Escenario 02 - Test ContentItem - CONTENTTYPE', () => {
 
-    test('Caso 2.1 - Crear ContentItem Empty, deberia contentType=Video.', () => {
+    // Default
+    test('Caso 2.1 - Crear ContentItem Empty, deberia contentType=default.', () => {
         
         let contenido1 = new ContentItem()
        
-        expect(contenido1.contentType).toBe("video")
+        expect(contenido1.contentType).toBe(contentTypeDefault)
     }); 
 
+    // Diferente a default
     test('Caso 2.2 - Crear item contentyType article', () => {
         
         let contenido1 = new ContentItem()
         contenido1.contentType = IContentType.Article
        
-        expect(contenido1.contentType).toBe("article")
+        expect(contenido1.contentType).toBe(IContentType.Article)
     }); 
 
 });
@@ -70,7 +73,7 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
         
         let contenido1 = new ContentItem()
       
-        contenido1.tags = ["React","Angular","Typescript"]
+        contenido1.tags = ["React", "Angular", "Typescript"]
 
         expect(contenido1.tags).toContain("React")
     });
@@ -79,9 +82,9 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
         
         let contenido1 = new ContentItem()
 
-        contenido1.tags = ["React","Angular","Typescript"]
+        contenido1.tags = ["React", "Angular", "Typescript"]
 
-        let response = contenido1.containsEveryTags(["React","Angular","Typescript"])
+        let response = contenido1.containsEveryTags(["React", "Angular", "Typescript"])
 
         expect(response).toBeTruthy();
        
@@ -91,9 +94,9 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
         
         let contenido1 = new ContentItem()
 
-        contenido1.tags = ["React","Angular","Typescript"]
+        contenido1.tags = ["React", "Angular", "Typescript"]
 
-        let response = contenido1.containsEveryTags(["Este no lo contiene","Angular","Typescript"])
+        let response = contenido1.containsEveryTags(["Este no lo contiene", "Angular", "Typescript"])
 
         expect(response).toBeFalsy();
        
@@ -104,9 +107,9 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
         
         let contenido1 = new ContentItem()
 
-        contenido1.tags = ["React","Angular","Typescript"]
+        contenido1.tags = ["React", "Angular", "Typescript"]
 
-        let response = contenido1.containTags(["Este no lo contiene","Angular","Pyton"])
+        let response = contenido1.containTags(["Este no lo contiene", "Angular", "Pyton"])
 
         expect(response).toBeTruthy();
        
@@ -116,14 +119,30 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
         
         let contenido1 = new ContentItem()
 
-        contenido1.tags = ["React","Angular","Typescript"]
+        contenido1.tags = ["React", "Angular", "Typescript"]
 
-        let response = contenido1.containTags(["Este no lo contiene","Este tampoco","Pyton"])
+        let response = contenido1.containTags(["Este no lo contiene", "Este tampoco", "Pyton"])
 
         expect(response).toBeFalsy();
        
     });
+
+    // Etiqueta duplicada.
+    test('Caso 3.7 - Agregar una etiqueta duplicada ', () => {
+
+        try {
+            let contenido1 = new ContentItem()
+            contenido1.tags = ["Angular", "React"]
+            contenido1.addTag("angular")
+
+            let response = contenido1.tags
+            expect(response).toHaveLength(4);
+
+        } catch (error) {
+            expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
+        }
   
+    });
 });
 
 
@@ -135,13 +154,46 @@ describe('Escenario 04 - Test ContentItem - DESCRIPTION', () => {
         contenido1.description = "Esto es la descripcion de un contenido."
     });
 
+    // Caso Verdadero. 3 palabras, solo 1 coincide.
+     test('Caso 4.2 - Verificar el metodo containsDescription', () => {
+
+        let contenido1 = new ContentItem();
+        contenido1.description = "Esto es la descripcion de un contenido."
+        
+         let response = contenido1.containDescription("Esto DEBERIA PASAR")
+         
+         expect(response).toBeTruthy()
+     });
+    
+    // Caso falso. 3 palabras, ninguna coincide.
+    test('Caso 4.3 - Verificar el metodo containsDescription', () => {
+
+        let contenido2 = new ContentItem();
+        contenido2.description = "Description del contenido."
+        
+         let response = contenido2.containDescription("No deberia pasar")
+         
+         expect(response).toBeFalsy()
+    });
+
+     // Caso falso. 3 palabras, ninguna coincide.
+    test('Caso 4.4 - Verificar el metodo containsDescription case-sensitive', () => {
+
+        let contenido1 = new ContentItem();
+        contenido1.description = "verificando si contiene esto"
+        
+         let response = contenido1.containDescription("Contiene")
+         
+         expect(response).toBeTruthy()
+    });
+
 });
 
 
 describe('Escenario 05 - Test ContentItem - DURATION', () => {
 
     // Ambos parametros, Since & Until. Expect truthy.
-    test('Caso 5.1 - Duration - Ambos parametros. Since 200ss Until 600ss ', () => {
+    test('Caso 5.1 - Duration - Ambos parametros. 4 & 6 minutos.', () => {
        
         let contenido1 = new ContentItem()
         contenido1.duration.setDuration(0,5,0)
@@ -159,7 +211,7 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
     })
 
     // Ambos parametros, Since & Until. Pero no cumple con los parametros, expect false.
-    test('Caso 5.2 - Duration - Solo Until. Since 100ss Until 299ss  ', () => {       
+    test('Caso 5.2 - Duration - Solo Until. 6 y 8 minutos  ', () => {       
         
         let contenido1 = new ContentItem()
         contenido1.duration.setDuration(0, 5, 0)
@@ -178,7 +230,7 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
     
     
     // Solo Until
-    test('Caso 5.3 - Duration - Solo Until. Since 0ss Until 600ss  ', () => {
+    test('Caso 5.3 - Duration - Solo Until. Until 10 minutos  ', () => {
 
         let contenido1 = new ContentItem()
         contenido1.duration.setDuration(0, 5, 0)
@@ -197,7 +249,7 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
     })
 
     // Solo Until espero false. 
-    test('Caso 5.4 - Duration - Solo Until. Since 0ss Until 200ss.  ', () => {
+    test('Caso 5.4 - Duration - Solo Until. Until 3,20 minutos. False ', () => {
 
         let contenido1 = new ContentItem()
         contenido1.duration.setDuration(0, 5, 0)
@@ -217,12 +269,12 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
 
 
     // Solo Since
-    test('Caso 5.5 - Duration - Solo Since. Since 200ss Until 0ss  ', () => {
+    test('Caso 5.5 - Duration - Solo Since.  Since 3.2 minutos  ', () => {
       
         let contenido1 = new ContentItem()
         contenido1.duration.setDuration(0, 5, 0)
         
-         // Crear 2 Durations Class, para comparar 2 valores.
+            // Crear 1 Durations Class, para FILTRAR.
         let durationSince = new Duration()
             durationSince.setDuration(0, 3, 20);
          
@@ -233,12 +285,12 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
     })
 
     // Solo Since, expect false
-     test('Caso 5.6 - Duration - Solo Since. Since 400ss Until 0ss  ', () => {
+     test('Caso 5.6 - Duration - Solo Since. Since 6,4 minutos. expect False  ', () => {
       
         let contenido1 = new ContentItem()
-        contenido1.duration.setDuration(0, 5, 0)
-        
-          // Crear 2 Durations Class, para comparar 2 valores.
+         contenido1.duration.setDuration(0, 5, 0)
+         
+            // Crear 1 Durations Class, para FILTRAR.
         let durationSince = new Duration()
             durationSince.setDuration(0, 6, 40); 
       
@@ -247,6 +299,29 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
 
         expect(response).toBeFalsy();
         
+     })
+    
+     // 2 contenidos 
+     test('Caso 5.6 BIS - Duration - Solo Since. 2 contenidos  ', () => {
+      
+        let contenido1 = new ContentItem()
+         contenido1.duration.setDuration(0, 5, 0)
+         
+        let contenido2 = new ContentItem()
+        contenido2.duration.setDuration(0, 10, 0)
+        
+          // Crear 1 Durations Class, para FILTRAR.
+        let durationSince = new Duration()
+            durationSince.setDuration(0, 6, 40); 
+      
+        
+         let responseContenido1: Boolean = contenido1.containsItemsBetweenTwoDurations(durationSince);
+         let responseContenido2: Boolean = contenido2.containsItemsBetweenTwoDurations(durationSince);
+         
+
+        expect(responseContenido1).toBeFalsy();
+        expect(responseContenido2).toBeTruthy();
+         
      })
     
     test('Caso 5.7 - Crear ContentItem con duration', () => {
@@ -357,6 +432,16 @@ describe('Escenario 06 - Test ContentItem - RATING', () => {
         let response = contenido1.containsRating(0, untilRating);
         
         expect(response).toBeFalsy();
+        
+     });
+    
+    test('Caso 6.6- rating default', () => {
+         
+        let contenido1 = new ContentItem();
+
+        let response = contenido1.rating
+        
+        expect(response).toBe(RatingDefault);
         
     });
   

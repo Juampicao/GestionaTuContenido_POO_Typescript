@@ -18,7 +18,7 @@ export class Duration {
      * @param mm number 
      * @param ss number 
      */
-    setDuration(hh: number, mm: number, ss: number) {
+    setDuration(hh: number = 0, mm: number = 0, ss: number = 0) {
         if (hh < 0 || mm < 0 || ss < 0) {        
             throw new ErrorExternoAlPasarParams(`No puede ser negativa la duracion hh:${hh}, mm:${mm}, ss:${ss}`)
         }
