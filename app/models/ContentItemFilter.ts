@@ -1,7 +1,7 @@
 import { ErrorExternoAlPasarParams } from "../error/NoHayResultadosError";
 import { IContentItemRating } from "../interfaces/IContentItemRating";
 import { IContentType } from "../interfaces/IContentType";
-import { FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationSince, maxFechaCreacionSince, maxFechaCreacionUntil, maxRatingFilter, minDurationSince, minFechaCreacionSince, minFechaCreacionUntil, minRatingFilter } from "../utils/ConfigurationENV";
+import { FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationSince, maxDurationUntil, maxFechaCreacionSince, maxFechaCreacionUntil, maxRatingFilter, minDurationSince, minDurationUntil, minFechaCreacionSince, minFechaCreacionUntil, minRatingFilter } from "../utils/ConfigurationENV";
 import { CustomLogger } from "../utils/CustomLogger";
 import { Duration } from "./Duration";
 
@@ -10,6 +10,7 @@ let _customLogger = new CustomLogger();
 export class ContentItemFilter {    
  
     private _title: string;
+    private _titleOrDescription: string; 
     private _contentType!: IContentType; 
     private _tags: string[];
     private _description: string;
@@ -22,6 +23,7 @@ export class ContentItemFilter {
 
     constructor() {
         this._title = "";
+        this._titleOrDescription = "";
         this._contentType = IContentType.Void;
         this._tags = [];
         this._description = "";
@@ -29,12 +31,11 @@ export class ContentItemFilter {
         this._durationUntil = new Duration();
         this._ratingSince = IContentItemRating.Void;
         this._ratingUntil = IContentItemRating.Void;
-        // ToDo : Debe empezar vacia? como fecha hoy? 
         this._fechaCreacionSince = FechaCreacionSinceDefault;
         this._fechaCreacionUntil = FechaCreacionUntilDefault;
     }
 
-    // Title
+    //* Title
     set title(title: string) {
         
         // RegEx 3 letters minimum.
@@ -53,16 +54,33 @@ export class ContentItemFilter {
 
     }
 
-    get title() {
+    get title() : string {
         return this._title.toLowerCase();
     }
 
-    // ContentType
+    //* Title or Description
+    set titleOrDescription(titleOrDescription: string) {
+          let RegEx3Letters: RegExp = /(.*[a-z]){3}/i;
+
+        if (RegEx3Letters.test(titleOrDescription)) {
+
+            this._titleOrDescription = titleOrDescription.toLocaleLowerCase(); 
+            
+        } else {
+            throw new ErrorExternoAlPasarParams(`Debe contener al menos 3 letras.`)
+        }
+    }
+
+    get titleOrDescription() : string {
+        return this._titleOrDescription.toLocaleLowerCase();
+    }
+
+    //* ContentType
     set contentType(contentType: IContentType) {
         this._contentType = contentType;
     }
 
-    get contentType() {
+    get contentType() : IContentType{
         return this._contentType
     }
 
@@ -71,44 +89,56 @@ export class ContentItemFilter {
         this._tags = tags;
     }
 
-    get tags() {
+    get tags(): string[] {
         return this._tags
     }
 
     // Description
     set description(description: string) {
         this._description = description.toLowerCase();
-    }
+    };
 
-    get description() {
+    get description() : string {
         return this._description.toLowerCase();
     }
 
+    
     // Duration
-    //Todo: max y min
-    set durationSince(duration: Duration) {
-        //! No puede ser mayor al maxDurationSince
-        if (duration > maxDurationSince || duration < minDurationSince) {
+    /**
+     * ! negativo ! <minDurationSince ! >maxDurationSince>
+     * @param durationSince:Duration
+     */
+    set durationSince(durationSince: Duration) {
+        if (durationSince > maxDurationSince || durationSince < minDurationSince) {
             throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minDurationSince} y ${maxDurationSince} `)
         }
-        this._durationSince = duration
+        this._durationSince = durationSince
     }
 
-    get durationSince() {
+    get durationSince() : Duration {
         return this._durationSince;
     }
 
-    //Todo: max y min
-    set durationUntil(duration: Duration) {
-        //! No puede ser mayor al maxDurationUntil
-        this._durationUntil = duration
+     /**
+     * ! negativo ! < minDurationUntil ! > maxDurationUntil
+     * @param durationUntil:Duration
+     */
+    set durationUntil(durationUntil: Duration) {
+          if (durationUntil > maxDurationUntil || durationUntil < minDurationUntil) {
+            throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minDurationSince} y ${maxDurationSince} `)
+        }
+        this._durationUntil = durationUntil
     }
 
-    get durationUntil() {
+    get durationUntil() : Duration {
         return this._durationUntil;
     }
 
     // Rating
+    /**
+     * ! < minRatingFilter ! > maxRatingFilter
+     * @param rating:IContentItemRating
+     */
     set ratingSince(rating: IContentItemRating) {
         if (rating > maxRatingFilter || rating < minRatingFilter) {
             throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minRatingFilter} y ${maxRatingFilter} `)
@@ -116,10 +146,14 @@ export class ContentItemFilter {
         this._ratingSince = rating; 
     }
 
-    get ratingSince() {
+    get ratingSince() : IContentItemRating {
         return this._ratingSince;
     }
 
+    /**
+     * ! < minRatingFilter ! > maxRatingFilter
+     * @param rating:IContentItemRating
+     */
     set ratingUntil(rating: IContentItemRating) {
         if (rating > maxRatingFilter || rating < minRatingFilter) {
             throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minRatingFilter} y ${maxRatingFilter} `)
@@ -127,11 +161,16 @@ export class ContentItemFilter {
         this._ratingUntil = rating;
     }
 
-    get ratingUntil() {
+    get ratingUntil() : IContentItemRating{
         return this._ratingUntil;
     }
   
     // Fecha Creacion
+
+    /**
+     * ! <minFechaCreacionSince ! > maxFechaCreacionSince
+     * @param fechaCreacionSince
+     */
     set fechaCreacionSince(fechaCreacionSince: Date) {
         
         _customLogger.logDebug(`ContentItemFilter, FechaCreacionSinceParam:${fechaCreacionSince}`)
@@ -141,10 +180,14 @@ export class ContentItemFilter {
         this._fechaCreacionSince = fechaCreacionSince;
     }
 
-    get fechaCreacionSince() {
+    get fechaCreacionSince()  : Date {
         return this._fechaCreacionSince
     }
 
+    /**
+     * ! <minFechaCreacionUntil ! > maxFechaCreacionUntil
+     * @param fechaCreacionSince
+     */
     set fechaCreacionUntil(fechaCreacionUntil: Date) {
 
         _customLogger.logDebug(`ContentItemFilter, FechaCreacionUntilParam:${fechaCreacionUntil}`)
@@ -154,11 +197,10 @@ export class ContentItemFilter {
         this._fechaCreacionUntil = fechaCreacionUntil;
     }
 
-    get fechaCreacionUntil() {
+    get fechaCreacionUntil() : Date {
         return this._fechaCreacionUntil
     }
 
-    
     
     // ToString
     toString() : string {
@@ -171,7 +213,12 @@ export class ContentItemFilter {
 
 
 
-// // Todo: Fecha creacion no puedo no inicairlizar, por que en ts.config esta puesto que me lo pida.
+
+
+
+
+
+// Todo: Fecha creacion no puedo no inicairlizar, por que en ts.config esta puesto que me lo pida.
 // Tip: Siempre el hueso. Donde parar el paginado? el hueso.
 // Servicio retorna la lista, el paginado lo recibe, y lo escupe al front.
 // Todo: Paginado. Pararme en el hueso. Bajo nivel.

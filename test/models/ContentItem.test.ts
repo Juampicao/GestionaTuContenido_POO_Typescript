@@ -8,6 +8,7 @@ import { CustomLogger } from "../../app/utils/CustomLogger";
 import { CrearDosItems } from "../utils/CrearDosItems";
 /**
  * 1) Title
+ * 1 bis) Title or Description
  * 2) ContentType
  * 3) Tags
  * 4) Description
@@ -20,9 +21,11 @@ import { CrearDosItems } from "../utils/CrearDosItems";
 let customLogger = new CustomLogger();
 
 
+//? - - - - - - - - -  - - - TITLE  - - - - - - - - -  - - - //  
+
 describe('Escenario 01 - Test ContentItem - TITLE', () => {
 
-    test('Caso 1.1 - Crear un ContentItem solo titulo not to be null.', () => {
+    test('Caso 1.1 - Nuevo', () => {
 
         let contenido1 = new ContentItem()
         
@@ -31,22 +34,100 @@ describe('Escenario 01 - Test ContentItem - TITLE', () => {
         expect(contenido1.title).toBe("Angular");
         expect(contenido1).not.toBe(null);
     });
+
+
+    test('Caso 1.2- ContainTitleOrDescription - True Title', () => {
     
+        let contenido1 = new ContentItem();
+        contenido1.title = "Esto es un nuevo titulo";
+        contenido1.description = "River Plate";
+
+        let response = contenido1.containDescriptionOrTitle("nuevo");
+        expect(response).toBe(true);
+
+    });
+
+    test('Caso 1.3- ContainTitleOrDescription - True Description', () => {
+    
+        let contenido1 = new ContentItem();
+        contenido1.title = "Esto es un nuevo titulo";
+        contenido1.description = "River Plate";
+
+        // let response = contenido1.containDescriptionOrTitle("River Plate");
+        let response = contenido1.containDescriptionOrTitle("ri");
+
+        expect(response).toBeTruthy()
+
+    });
+
+    test('Caso 1.4 - ContainTitleOrDescription - False ', () => {
+    
+        let contenido1 = new ContentItem();
+        contenido1.title = "Esto es un nuevo titulo";
+        contenido1.description = "River Plate";
+
+        let response = contenido1.containDescriptionOrTitle("NO TIENE");
+        expect(response).toBe(false);
+
+    });
+    
+
 });
 
+//? - - - - - - - - -  - - - TITLEORDESCRIPTION  - - - - - - - - -  - - - //  
+describe('Escenario 01 Bis - Test ContentItem - TITLEORDESCRIPTION', () => {
+
+    test('Caso 1.1 Bis -Solo Titulo Case Insensitive', () => {
+
+        let contenido1 = new ContentItem()
+        contenido1.title = "El titulo es este";
+
+        let filter = "TituLO";
+        let response = contenido1.containDescriptionOrTitle(filter);
+
+        expect(response).toBeTruthy();
+    });
+
+ 
+    test('Caso 1.2 Bis -Solo Descripcion Case Insensitive', () => {
+
+        let contenido1 = new ContentItem()
+        contenido1.description = "La descripcion";
+
+        let filter = "DEScriPciOn";
+        let response = contenido1.containDescriptionOrTitle(filter);
+        
+        expect(response).toBeTruthy();
+    });
+
+    test('Caso 1.3 Bis - Descripcion y titulo Case Insensitive', () => {
+
+        let contenido1 = new ContentItem();
+        contenido1.title = "El titulo es este";
+        contenido1.description = "La descripcion";
+
+        let filter = "DEScriPciOn";
+        let response = contenido1.containDescriptionOrTitle(filter);
+        
+        expect(response).toBeTruthy();
+    });
+   
+});
+
+//? - - - - - - - - -  - - - CONTENTTYPE  - - - - - - - - -  - - - //  
 
 describe('Escenario 02 - Test ContentItem - CONTENTTYPE', () => {
 
     // Default
-    test('Caso 2.1 - Crear ContentItem Empty, deberia contentType=default.', () => {
+    test('Caso 2.1 - Default', () => {
         
         let contenido1 = new ContentItem()
        
         expect(contenido1.contentType).toBe(contentTypeDefault)
     }); 
 
-    // Diferente a default
-    test('Caso 2.2 - Crear item contentyType article', () => {
+    // Nuevo
+    test('Caso 2.2 - Nuevo', () => {
         
         let contenido1 = new ContentItem()
         contenido1.contentType = IContentType.Article
@@ -56,6 +137,8 @@ describe('Escenario 02 - Test ContentItem - CONTENTTYPE', () => {
 
 });
 
+
+//? - - - - - - - - -  - - - TAGS  - - - - - - - - -  - - - //  
 
 describe('Escenario 03 - Test ContentItem - TAGS', () => {
 
@@ -145,50 +228,53 @@ describe('Escenario 03 - Test ContentItem - TAGS', () => {
     });
 });
 
+//? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
 
 describe('Escenario 04 - Test ContentItem - DESCRIPTION', () => {
     
-    test('Caso 4.1 - Creando un contenido con description', () => {
+    test('Caso 4.1 - Nuevo', () => {
 
         let contenido1 = new ContentItem();
         contenido1.description = "Esto es la descripcion de un contenido."
     });
 
-    // Caso Verdadero. 3 palabras, solo 1 coincide.
-     test('Caso 4.2 - Verificar el metodo containsDescription', () => {
+    // // Caso Verdadero. 3 palabras, solo 1 coincide.
+    //  test('Caso 4.2 - containsDescription - True', () => {
 
-        let contenido1 = new ContentItem();
-        contenido1.description = "Esto es la descripcion de un contenido."
+    //     let contenido1 = new ContentItem();
+    //     contenido1.description = "Esto es la descripcion de un contenido."
         
-         let response = contenido1.containDescription("Esto DEBERIA PASAR")
+    //      let response = contenido1.containDescription("Esto DEBERIA PASAR")
          
-         expect(response).toBeTruthy()
-     });
+    //      expect(response).toBeTruthy()
+    //  });
     
-    // Caso falso. 3 palabras, ninguna coincide.
-    test('Caso 4.3 - Verificar el metodo containsDescription', () => {
+    // // Caso falso. 3 palabras, ninguna coincide.
+    // test('Caso 4.3 - containsDescription - False', () => {
 
-        let contenido2 = new ContentItem();
-        contenido2.description = "Description del contenido."
+    //     let contenido2 = new ContentItem();
+    //     contenido2.description = "Description del contenido."
         
-         let response = contenido2.containDescription("No deberia pasar")
+    //      let response = contenido2.containDescription("No deberia pasar")
          
-         expect(response).toBeFalsy()
-    });
+    //      expect(response).toBeFalsy()
+    // });
 
-     // Caso falso. 3 palabras, ninguna coincide.
-    test('Caso 4.4 - Verificar el metodo containsDescription case-sensitive', () => {
+    //  // Caso falso. 3 palabras, ninguna coincide.
+    // test('Caso 4.4 - containsDescription  - case-sensitive', () => {
 
-        let contenido1 = new ContentItem();
-        contenido1.description = "verificando si contiene esto"
+    //     let contenido1 = new ContentItem();
+    //     contenido1.description = "verificando si contiene esto"
         
-         let response = contenido1.containDescription("Contiene")
+    //      let response = contenido1.containDescription("Contiene")
          
-         expect(response).toBeTruthy()
-    });
+    //      expect(response).toBeTruthy()
+    // });
 
 });
 
+
+//? - - - - - - - - -  - - - DURATION  - - - - - - - - -  - - - //  
 
 describe('Escenario 05 - Test ContentItem - DURATION', () => {
 
@@ -357,8 +443,6 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
         }      
     })
 
-    //Todo maxdurationvideo test
-    //! Mayor a 3 hs deberia dar error.
     test('Caso 5.10- Crear duracion MAXDURATIONVIDEO & MINDURATIONVIDEO ERROR', () => {
 
         try {
@@ -372,6 +456,7 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
 });
 
 
+//? - - - - - - - - -  - - - RATING  - - - - - - - - -  - - - //  
 
 describe('Escenario 06 - Test ContentItem - RATING', () => {
 
@@ -445,9 +530,10 @@ describe('Escenario 06 - Test ContentItem - RATING', () => {
         
     });
   
+    
 });
 
-
+//? - - - - - - - - -  - - - FECHA CREACION  - - - - - - - - -  - - - //  
 describe('Escenario 07 - Test ContentItem - Fecha Creacion', () => {
 
     // Por defecto

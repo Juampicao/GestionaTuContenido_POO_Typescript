@@ -11,6 +11,7 @@ let customLogger = new CustomLogger();
 /**
  * 1) Title
  * 2) ContentType
+ * 2 Bis) Title or description
  * 3) Tags
  * 4) Description
  * 5) Duration
@@ -19,10 +20,11 @@ let customLogger = new CustomLogger();
  */
 
 
-// ? TITLE
+//? - - - - - - - - -  - - - TITLE  - - - - - - - - -  - - - //  
+
 describe('Escenario 1 - ContentItemFilter - TITLE ', () => {
 
-    // Crear titulo case-sensitive.
+    // case-sensitive.
     test('Caso 1.1 - Crear Filter titulo "AngulAR", case-sensitive.', () => {
         let filter = new ContentItemFilter();
         filter.title = "AngulAR";
@@ -43,13 +45,15 @@ describe('Escenario 1 - ContentItemFilter - TITLE ', () => {
             expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
             // expect(error).toStrictEqual(error2)
         }        
-    });
+   });
+
 });
 
 
 
 
-// ? CONTENT TYPE
+//? - - - - - - - - -  - - - CONTENTTYPE  - - - - - - - - -  - - - //  
+
 describe('Escenario 2 - ContentItemFilter - CONTENTTYPE ', () => {
     
     // Filter = ContentType.
@@ -84,7 +88,28 @@ describe('Escenario 2 - ContentItemFilter - CONTENTTYPE ', () => {
 });
 
 
-// ? TAGS
+//? - - - - - - - - -  - - - TITLEORDESCRIPTION  - - - - - - - - -  - - - //  
+
+describe('Escenario 2 Bis - ContentItemFilter - TITLEORDESCRIPTION ', () => {
+
+    // Default
+    test('Caso 2.1 BIS - Default ', () => {
+        let filter = new ContentItemFilter();
+        
+        expect(filter.titleOrDescription).toBe("");
+    });
+
+    // Nuevo
+    test('Caso 2.2 bis - Nuevo', () => {
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "Busca por titulo o descripcion"; 
+
+        expect(filter.titleOrDescription).toBe("busca por titulo o descripcion")
+    });
+});
+
+//? - - - - - - - - -  - - - TAGS  - - - - - - - - -  - - - //  
+
 describe('Escenario 3 - ContentItemFilter - TAGS ', () => {
 
      // Crear un tag.
@@ -130,7 +155,8 @@ describe('Escenario 3 - ContentItemFilter - TAGS ', () => {
 });
 
 
-// ? DESCRIPTION
+//? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
+
 describe('Escenario 4 - ContentItemFilter - DESCRIPTION ', () => {
 
     // Crear descripcion case-senstivie.
@@ -144,24 +170,25 @@ describe('Escenario 4 - ContentItemFilter - DESCRIPTION ', () => {
     })
 
 
-    // containDescription false. 
-    test('Caso 4.2 - Filter containDescription - False -  Case sensitive.', () => {
-        let contenido1 = new ContentItem(); 
-        contenido1.description = "No es el mejor de todos"
+    // // containDescription false. 
+    // test('Caso 4.2 - Filter containDescription - False -  Case sensitive.', () => {
+    //     let contenido1 = new ContentItem(); 
+    //     contenido1.description = "No es el mejor de todos"
 
-        let filter = new ContentItemFilter();
-        filter.description = "Not found";
+    //     let filter = new ContentItemFilter();
+    //     filter.description = "Not found";
         
-        let response = contenido1.containDescription(filter.description)       
-        expect(response).toBeFalsy();
-    })
+    //     let response = contenido1.containDescription(filter.description)       
+    //     expect(response).toBeFalsy();
+    // })
 });
 
 
-// ? DURATION
+//? - - - - - - - - -  - - - DURATION  - - - - - - - - -  - - - //  
+
 describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
 
-    test('Caso 5.1- Crear Filter DurationSince & DurationUntil', () => {
+    test('Caso 5.1- DurationSince & DurationUntil', () => {
 
         let filter = new ContentItemFilter();
         filter.durationSince = new Duration();
@@ -194,12 +221,12 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
         }      
     })
 
-    test('Caso 5.3- Crear Filter DurationSince & DurationUntil NO PERMITIDOS POR LA CONFIGURACION MAXIMA SINCE', () => {
+    test('Caso 5.3- DurationSince & DurationUntil NO PERMITIDOS POR LA CONFIGURACION MAXIMA SINCE', () => {
 
         try {
             let filter = new ContentItemFilter();
             filter.durationSince = new Duration()
-            filter.durationSince.setDuration(3,10,20);
+            filter.durationSince.setDuration(5,10,20);
         
              let durationSince = filter.durationSince;
              expect(durationSince).toBeNull()
@@ -228,7 +255,8 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
 
 });
 
-// ? RATING
+//? - - - - - - - - -  - - - RATING  - - - - - - - - -  - - - //  
+
 describe('Escenario 6 - ContentItemFilter - RATING ', () => {
 
     test('Caso 6.1- Crear un FilterRaiting vacio.', () => {
@@ -252,6 +280,7 @@ describe('Escenario 6 - ContentItemFilter - RATING ', () => {
     })
 });
 
+//? - - - - - - - - -  - - - FECHA CREACION  - - - - - - - - -  - - - //  
 describe('Escenario 7 - ContentItemFilter - FECHA CREACION ', () => {
 
     // Since y Until Default
@@ -328,5 +357,6 @@ describe('Escenario 7 - ContentItemFilter - FECHA CREACION ', () => {
         
     });
 });
+
 
 

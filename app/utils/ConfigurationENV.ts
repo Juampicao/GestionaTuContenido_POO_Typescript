@@ -4,65 +4,67 @@ import { IContentType } from "../interfaces/IContentType";
 
 // - - - - -  DURATION - - - - - //
 //? Duration Video
-export let minDurationVideo: Duration = new Duration()
+export const minDurationVideo: Duration = new Duration()
 minDurationVideo.setDuration(0, 0, 1)
 
-export let maxDurationVideo: Duration = new Duration()
+export const maxDurationVideo: Duration = new Duration()
 maxDurationVideo.setDuration(3, 0, 0)
 
 //? Since
-export let maxDurationSince: Duration = new Duration()
+export const maxDurationSince: Duration = new Duration()
 maxDurationSince.setDuration(3, 0, 0)
         
-export let minDurationSince: Duration = new Duration()
+export const minDurationSince: Duration = new Duration()
 minDurationSince.setDuration(0, 0, 1)
 
 //? Until
-export let maxDurationUntil: Duration = new Duration()
+export const maxDurationUntil: Duration = new Duration()
 maxDurationUntil.setDuration(3, 0, 1)
 
-export let minDurationUntil: Duration = new Duration()
+export const minDurationUntil: Duration = new Duration()
 minDurationUntil.setDuration(0, 0, 2)
 
 // - - - - -  RATING - - - - - //
 // ? Rating Default 
-export let RatingDefault: IContentItemRating = IContentItemRating.Void; 
+export const RatingDefault: IContentItemRating = IContentItemRating.Void; 
 
 // ? Rating ContentItem
-export let minRatingContentItem: IContentItemRating = IContentItemRating.Uno; 
-export let maxRatingContentItem: IContentItemRating = IContentItemRating.Cinco; 
+export const minRatingContentItem: IContentItemRating = IContentItemRating.Uno; 
+export const maxRatingContentItem: IContentItemRating = IContentItemRating.Cinco; 
 
 // ? Rating ContentitemFilter
-export let minRatingFilter: IContentItemRating = IContentItemRating.Uno; 
-export let maxRatingFilter: IContentItemRating = IContentItemRating.Cinco; 
+export const minRatingFilter: IContentItemRating = IContentItemRating.Uno; 
+export const maxRatingFilter: IContentItemRating = IContentItemRating.Cinco; 
 
 // - - - - -  FECHA CREACION - - - - - //
 //? FechaCreacionPorDefecto
 
-export let fechaCreacionDefault: Date = new Date();
+export const fechaCreacionDefault: Date = new Date();
 
 //? FechaCreacion
-export let maxFechaCreacion: Date = new Date("2040 01 01");
-export let minFechaCreacion: Date = new Date("2000 01 01");
+export const maxFechaCreacion: Date = new Date("2040 01 01");
+export const minFechaCreacion: Date = new Date("2000 01 01");
 
 //? FechaCreacionSinceFilter
-export let minFechaCreacionSince: Date = new Date("2000 01 01");
-export let maxFechaCreacionSince: Date = new Date("2040 01 01");
-export let FechaCreacionSinceDefault: Date = minFechaCreacionSince;
+export const minFechaCreacionSince: Date = new Date("2000 01 01");
+export const maxFechaCreacionSince: Date = new Date("2040 01 01");
+export const FechaCreacionSinceDefault: Date = minFechaCreacionSince;
 
 //? FechaCreacionUntilFilter
-export let minFechaCreacionUntil: Date = new Date("2000 01 01");
-export let maxFechaCreacionUntil: Date = new Date("2040 01 01");
-export let FechaCreacionUntilDefault: Date = maxFechaCreacionUntil
+export const minFechaCreacionUntil: Date = new Date("2000 01 01");
+export const maxFechaCreacionUntil: Date = new Date("2040 01 01");
+export const FechaCreacionUntilDefault: Date = maxFechaCreacionUntil
     
 //? Pagination
-// export let pageDefault: number = 1;
-// export let limitDefault: number = 2;
-// export let startIndex: number = (page - 1) * limit
-// export let endIndex:number = page * limit
+// export const pageDefault: number = 1;
+// export const limitDefault: number = 2;
+// export const startIndex: number = (page - 1) * limit
+// export const endIndex:number = page * limit
 
 // - - - - --  ContentType Default - - - - - // 
-export let contentTypeDefault: IContentType = IContentType.Video; 
+export const contentTypeDefault: IContentType = IContentType.Video; 
+
+//Todo Hoy => Export como json;
 
 
 

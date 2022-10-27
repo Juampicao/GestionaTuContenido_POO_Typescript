@@ -7,8 +7,11 @@ import { ContentItemFilter } from "../../app/models/ContentItemFilter"
 import { IContentType } from '../../app/interfaces/IContentType';
 import { Duration } from '../../app/models/Duration';
 import { CustomLogger } from '../../app/utils/CustomLogger';
-import { NoHayResultadosError } from '../../app/error/NoHayResultadosError';
+import { ErrorExternoAlPasarParams, NoHayResultadosError } from '../../app/error/NoHayResultadosError';
 import { maxDurationSince } from '../../app/utils/ConfigurationENV';
+import { IContentItemRating } from '../../app/interfaces/IContentItemRating';
+import { CrearDosItems } from '../utils/CrearDosItems';
+import { CrearContentItemsBasicos } from '../utils/CrearContentItemsBasicos';
 
 // Funcion interna de testing: Levanto una instancia. Inyeccion de dependencias.
 function getService(instance: string = "original"): IContentManagerService {
@@ -38,91 +41,97 @@ describe('Escenario 01 - Test ContentManagerService ', () => {
     // Caso 2: Crear un item. 
     test('Caso 1.2 - Crear item not null.', () => {
 
-        servicioContentManager.crear(new ContentItem("Aprendiendo Angular", IContentType.Video, ["Angular", "Typescript"], "Aprende angular de 0 a 1000"));
+        // servicioContentManager.crear(new ContentItem("Aprendiendo Angular", IContentType.Video, ["Angular", "Typescript"], "Aprende angular de 0 a 1000"));
         
-        expect(servicioContentManager.getAllContentsItems()).not.toBeNull()
+        // expect(servicioContentManager.getAllContentsItems()).not.toBeNull()
 
     });
 
 });
 
-// Escenario
-describe('Escenario 2 - ServiceMock ', () => {
-
-    // let servicioContentManager = getService("test");
-
+//? - - - - - - - - -  - - - TITLE OR  DESCRIPTION  - - - - - - - - -  - - - //
+describe('Escenario 8 - ServiceMock  - TITLE OR DESCRIPTION', () => {
+   
     let servicioContentManager = new ContentManagerServiceMock();
+   
+    test('Caso 8.1 - Filter 1 lenght', () => {
+    
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "angular"
+    
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
 
-    test('Caso 2.1 - Array Titles incluyan "Angular" / Case Insensitive', () => {
+        expect(response).toHaveLength(1);
+
+    });
+
+    test('Caso 8.2 - 2 en Description', () => {
+    
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "programacion"
+    
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+
+        expect(response).toHaveLength(2);
+
+    });
+
+    test('Caso 8.3 - 2 en titulo', () => {
+    
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "ejemplo"
+    
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+
+        expect(response).toHaveLength(2);
+
+    });
+
+});
+
+//? - - - - - - - - -  - - - TITLE  - - - - - - - - -  - - - //  
+describe('Escenario 2 - ServiceMock - TITLE ', () => {
+
+    let servicioContentManager = getService("test");
+
+    test('Caso 2.1 - "Angular" / Case Insensitive', () => {
 
         let filter = new ContentItemFilter();
-        filter.title = "angular";
+        filter.title = "angu";
 
         let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
         
         expect(response).toHaveLength(1);
     })
-
-    test('Caso 2.2 - Array Description incluyan "Angular" / Case Insensitive', () => {
-
-        let filter = new ContentItemFilter();
-        filter.description = "angular";
-
-        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
-        
-        expect(response).toHaveLength(1);
-    })
-
-
-    // To-Do => Terminar desde el contentItem.
-    // Deberia pasarle el until..
-    // test('Caso 2.3 - Filter by duration 2 params', () => {
-
-    //     let filter = new ContentItemFilter();
-        
-    //     filter.duration = new Duration(0, 0, 50);
-        
-    //     let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
-        
-    //     expect(response).toHaveLength(2);
-    // })
-    
-    
-    // test('Caso 2.4 - Filter by rating', () => {
-
-    //     let filter = new ContentItemFilter();
-        
-    //     filter.rating = IContentItemRating.Cinco
-        
-    //     let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
-        
-    //     // To-Do: ¿xq no me lee el console log?
-    //     console.log("desde caso 2.4")
-
-    //     // Hay un contenido creado que tiene rating = 5. Expect 1 length.
-    //     expect(response).toHaveLength(0);
-    // })
- 
-    // To-Do: Array de tags que no coincida ningun tag. Retorna vacio. Espero un new Message.(cambiar desde el return del serviceMock y el output)
-    //  test('Caso 2.3 - Array tag vacio / Case Insensitive', () => {
-
-    //     let filter = new ContentItemFilter();
-    //     filter.tags = ["Python"];
-
-    //     let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
-        
-    //     expect(response).toBe(new CustomMessage());
-    // })
 
 });
 
 
-//! Deberia dar error los duration menores a minDurationSince.
-describe('Escenario 3 - ServiceMock  - Duration', () => {
+//? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
 
-    let servicioContentManager = new ContentManagerServiceMock();
+describe('Escenario 3 - ServiceMock  - Description', () => {
 
-    test('Caso 3.1 - 0 minutos && 180 minutos', () => {
+    let servicioContentManager = getService("test");
+
+    test('Caso 3.1 - Description incluyan "Angular" / Case Insensitive', () => {
+
+        let filter = new ContentItemFilter();
+        filter.description = "angu";
+
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+        
+        expect(response).toHaveLength(1);
+    })
+
+});
+
+//? - - - - - - - - -  - - - DURATION  - - - - - - - - -  - - - //  
+
+describe('Escenario 4 - ServiceMock  - Duration', () => {
+
+    let servicioContentManager = getService("test");
+
+    test('Caso 4.1 - 0 minutos && 180 minutos', () => {
 
         let filter = new ContentItemFilter();
         filter.durationSince = new Duration();
@@ -136,11 +145,11 @@ describe('Escenario 3 - ServiceMock  - Duration', () => {
         expect(response).toHaveLength(2);
     })
 
-    test('Caso 3.2 - 10 segundos && 60 minutos.', () => {
+    test('Caso 4.2 - 0,10 minutos && 60 minutos.', () => {
 
         let filter = new ContentItemFilter();
         filter.durationSince = new Duration();
-        filter.durationSince.setDuration(0, 0, 10); // 10 segundos.
+        filter.durationSince.setDuration(0, 0, 10); // 0.10 minutos.
 
         filter.durationUntil = new Duration();
         filter.durationUntil.setDuration(2, 0, 0); // 60 minutos.
@@ -150,7 +159,7 @@ describe('Escenario 3 - ServiceMock  - Duration', () => {
         expect(response).toHaveLength(2);
     })
 
-     test('Caso 3.3 - mayores 3 horas / expect Error', () => {
+     test('Caso 4.3 - mayores 180 minutos / expect Error', () => {
 
         try {
             let filter = new ContentItemFilter();
@@ -168,10 +177,44 @@ describe('Escenario 3 - ServiceMock  - Duration', () => {
     })
 });
 
-//? Fecha Creacion
+//? - - - - - - - - -  - - - RATING  - - - - - - - - -  - - - //  
+
+describe('Escenario 5 - ServiceMock  - RATING ', () => {
+
+    let servicioContentManager = getService("test");
+
+    test('Caso 5.1- Filter by rating', () => {
+
+        let filter = new ContentItemFilter();
+        
+        filter.ratingSince = IContentItemRating.Tres; 
+        filter.ratingUntil = IContentItemRating.Cinco
+
+        
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+                
+        expect(response).toHaveLength(2);
+    })
+
+    //Todo rating 
+    test('Caso 5.2- Filter by rating', () => {
+
+        let filter = new ContentItemFilter();
+        
+        filter.ratingSince = IContentItemRating.Cinco;
+        
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+                
+        expect(response).toHaveLength(1);
+    })
+});
+
+
+
+//? - - - - - - - - -  - - - FECHA CREACION  - - - - - - - - -  - - - //  
 describe('Escenario 6 - ServiceMock  - Fecha Creacion', () => {
 
-    let servicioContentManager = new ContentManagerServiceMock();
+    let servicioContentManager = getService("test");
    
     // Sin parametros
     test('Caso 6.1 - Buscar por fecha de creacion sin parametros', () => {
@@ -180,31 +223,213 @@ describe('Escenario 6 - ServiceMock  - Fecha Creacion', () => {
      
         let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
 
-        // Expect todo el array creado
         expect(response).toHaveLength(2);
     });
 
     // Ambos parametros 
-     // Sin parametros
-    // test('Caso 6.2 - Buscar por fecha de creacion con parametros', () => {
+    test('Caso 6.2 - 2 parametros', () => {
         
-    //     let filter = new ContentItemFilter();
-    //     filter.fechaCreacionSince = new Date(2015, 10, 10);
-    //     filter.fechaCreacionUntil = new Date(2025, 10, 10);
+        let filter = new ContentItemFilter();
+        filter.fechaCreacionSince = new Date(2015, 10, 10);
+        filter.fechaCreacionUntil = new Date(2025, 10, 10);
         
-    //     let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
 
-    //     // Expect todo el array creado
-    //     expect(response).toHaveLength(1);
-    // });
+        expect(response).toHaveLength(1);
+    });
 
     // Solo since
+    test('Caso 6.3 - 2 parametros', () => {
+        
+        let filter = new ContentItemFilter();
+        filter.fechaCreacionSince = new Date(2015, 10, 10);
+        
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
 
-    // Solo Until
+        expect(response).toHaveLength(1);
+    });
 
     // Error de Since
+    test('Caso 6.4 - Sin error min Since date', () => {
+        try {
+            let filter = new ContentItemFilter();
+            filter.fechaCreacionSince = new Date(1900, 10, 10);
+            
+            let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+    
+            expect(response).toHaveLength(1);
+        } catch (error) {
+            expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
+            
+        }
+    });
+
 });
 
 
 
 
+//? - - - - - - - - -  - - - TAGS  - - - - - - - - -  - - - //  
+describe('Escenario 7- ServiceMock  - Tags ', () => {
+
+    let servicioContentManager = getService("test");
+    
+    test('Caso 7.1 - Exito ', () => {
+
+        let filter = new ContentItemFilter();
+        filter.tags = ["angular"]
+
+        let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+
+        expect(response).toHaveLength(1);
+
+    });
+
+    test('Caso 7.2 - Error no resultados ', () => {
+
+        try {
+
+            let filter = new ContentItemFilter();
+            filter.tags = ["PYTON"]
+    
+            let response: Array<ContentItem> = servicioContentManager.getContentsItemsByFilter(filter)
+    
+            expect(response).toHaveLength(1);
+        } catch (error) {
+            expect(error).toBeInstanceOf(NoHayResultadosError);            
+        }
+
+    });
+
+});
+
+
+
+//? - - - - - - - - -  - - - PAGED  - - - - - - - - -  - - - //  
+
+describe('Escenario 9 - ServiceMock  - getContentItemsByFilterPaged - CrearDosItems para pruebas.', () => {
+
+    let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(7));
+   
+    
+    test('Caso 9.1 -FilterByPaged limit 1', () => {
+        let filter = new ContentItemFilter();
+
+        let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 1, 1, "desc");
+
+        expect(response).toHaveLength(1);
+    
+    });
+
+    test('Caso 9.2 -FilterByPaged filter by title (response = 1)', () => {
+
+        let filter = new ContentItemFilter();
+        filter.title = "Angular"
+
+        let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 1, 1, "desc");
+
+        expect(response).toHaveLength(1);
+    
+    });
+
+    // No existe el item. 
+    test('Caso 9.3 -FilterByPaged filter title or description', () => {
+        try {
+            
+            let filter = new ContentItemFilter();
+            filter.titleOrDescription = "programacion"
+    
+            let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 1, 2, "desc");
+    
+            expect(response).toHaveLength(2);
+
+        } catch (error) {
+            expect(error).toBeInstanceOf(NoHayResultadosError);
+        }
+    
+    });
+
+    // Todo hoy: Hacer pedido de pagina o limit negativo. Error.
+    
+});
+
+//? Utilizo para probar el Servicio de prueba CrearContentItemsBasicos(5)
+describe('Escenario 10 - ServiceMock  - getContentItemsByFilterPaged - Crear5Items para pruebas.', () => {
+
+    // 1 y 1 - ParticularContentItemsCuantity
+    test('Caso 10.1 - Filter  Page 1 limit 1 - ', () => {
+        let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(5));
+
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "angular"
+
+        let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 1, 5, "desc");
+
+        expect(response).toHaveLength(5);
+    });
+
+    // 1 y 2.
+    test('Caso 10.2 - Filter  Page 1 limit 2', () => {
+        let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(5));
+
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "angular"
+
+        let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 1, 2, "desc");
+
+        expect(response).toHaveLength(2);
+    });
+
+
+    // Pagina 2 limit 2
+    test('Caso 10.3 - Filter  Page 2 limit 2', () => {
+         let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(5));
+
+        let filter = new ContentItemFilter();
+        filter.titleOrDescription = "angular"
+
+        let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 2, 2, "desc");
+
+        expect(response).toHaveLength(2);
+    });
+
+
+    // Caso Particular. Page 2, limit 3. Total 5 items retornados.
+    test('Caso 10.4 - Lista de 5, page 2, limit 3. No hay resultados.', () => {
+
+        try {
+            
+            let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(5));
+    
+            let filter = new ContentItemFilter();
+            filter.titleOrDescription = "angular"
+    
+            let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 2, 3, "desc");
+    
+            expect(response).toHaveLength(2);
+        } catch (error) {
+            // Todo tipo de error.
+            expect(error).toBeInstanceOf(NoHayResultadosError)
+        }
+    
+    });
+
+
+    // Pagina inexistente. 
+    test('Caso 10.5 - Pagina solicitada con esos parametros no existe.', () => {
+        try {
+            let servicioContentManager = new ContentManagerServiceMock(new CrearContentItemsBasicos().getParticularContentItemsCuantity(5));
+            
+            let filter = new ContentItemFilter();
+            filter.titleOrDescription = "angular"
+            
+            let response: Array<ContentItem> = servicioContentManager.getContentItemsByFilterPaged(filter, 4, 3, "desc");
+            
+            expect(response).toHaveLength(2);
+
+        } catch (error) {
+            expect(error).toBeInstanceOf(NoHayResultadosError)
+        }
+    });
+    
+});

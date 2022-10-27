@@ -14,6 +14,7 @@ let servicioContentManager = new ContentManagerServiceMock();
 /**
  * 1) Title
  * 2) ContentType
+ * 2 Bis) TitleOrDescription
  * 3) Tag
  * 4) Description
  * 5) Duration
@@ -21,10 +22,12 @@ let servicioContentManager = new ContentManagerServiceMock();
  * 7) Fecha
  */
 
+//? - - - - - - - - -  - - - TITLE  - - - - - - - - -  - - - //  
+
 describe('Escenario 01 - Test ContentManager - TITLE ', () => {
 
-    // Deberia recibir bien el titulo
-    test('Caso 1.1 - Pasar titulo not null.', () => {
+   
+    test('Caso 1.1 - NUEVO', () => {
 
         // Crear objeto. Guardar la referencia.
         let contentManager1 = new ContentManager(servicioContentManager); 
@@ -82,13 +85,20 @@ describe('Escenario 01 - Test ContentManager - TITLE ', () => {
 
 })
 
-    //Todo: no registra LA DESCRIPTION..
-describe('Escenario 01 BIS - Test ContentManager - TITLE OR DESCRIPTION ', () => {
+//Todo: no registra LA DESCRIPTION..
+//? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
+
+
+    
+    
+
+//? - - - - - - - - -  - - - TitleOrDescription  - - - - - - - - -  - - - //  
+describe('Escenario 02 BIS - Test ContentManager - TITLE OR DESCRIPTION ', () => {
    
     // Del titulo
-    test('Caso 1.1 bis - Buscar filtro title or description "angular', () => {
+    test('Caso 2.1 bis - title  "angular', () => {
 
-        let contentManager1 = new ContentManager(servicioContentManager); 
+        let contentManager1 = new ContentManager(servicioContentManager);
         
         let response: Array<ContentItem> = contentManager1.getContentsItemsByTitleOrDescription("angular");
  
@@ -97,52 +107,51 @@ describe('Escenario 01 BIS - Test ContentManager - TITLE OR DESCRIPTION ', () =>
     });
 
     // Contiene solo en la descripcion
-    test('Caso 1.2 bis - Buscar filtro title or description "experto', () => {
+    test('Caso 2.2 bis - description "experto', () => {
 
-        let contentManager1 = new ContentManager(servicioContentManager); 
+        let contentManager1 = new ContentManager(servicioContentManager);
         
         let response: Array<ContentItem> = contentManager1.getContentsItemsByTitleOrDescription("experto");
  
         expect(response).toHaveLength(1);
 
-     });
+    });
     
-    // De la descripcion
-    //  test('Caso 1.2 bis - Buscar filtro title or description "programacion', () => {
+    
+    test('Caso 2.3 bis - Buscar filtro title or description "programacion', () => {
 
-    //     let contentManager1 = new ContentManager(servicioContentManager); 
+        let contentManager1 = new ContentManager(servicioContentManager);
         
-    //     let response: Array<ContentItem> = contentManager1.getContentsItemsByTitleOrDescription("programacion");
+        let response: Array<ContentItem> = contentManager1.getContentsItemsByTitleOrDescription("programacion");
  
-    //     expect(response).toHaveLength(2);
+        expect(response).toHaveLength(2);
 
-    //  });
-    
-    
-    // 1 del titulo & 1 descripcion
+    });
 
-    // Ninguno.
+    //Todo 1 del titulo & 1 descripcion
+
+    //todo Ninguno.
     
     // Menor a 3 letras error
-    test('Caso 1.5 bis - Titulo o descripcion menor a 3 letras', () => {
+    test('Caso 2.4 bis - Titulo o descripcion menor a 3 letras', () => {
         try {
         
-            let contentManager1 = new ContentManager(servicioContentManager); 
+            let contentManager1 = new ContentManager(servicioContentManager);
             
             let response: Array<ContentItem> = contentManager1.getContentsItemsByTitleOrDescription("de");
      
             expect(response).toHaveLength(1);
 
         } catch (error) {
-            expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
+            expect(error).toBeInstanceOf(Error)
         }
 
 
     });
 
 });
+//? - - - - - - - - -  - - - CONTENTTYPE  - - - - - - - - -  - - - //  
 
-// ? CONTENTTPYE 
 describe('Escenario 02 - Test ContentManager - CONTENTTYPE ', () => {
 
     // Buscar por filtro contentType
@@ -161,7 +170,8 @@ describe('Escenario 02 - Test ContentManager - CONTENTTYPE ', () => {
 });
 
 
-// ? TAGS
+//? - - - - - - - - -  - - - TAGS  - - - - - - - - -  - - - //  
+
 describe('Escenario 03 - Test ContentManager - TAGS ', () => {
 
     // Agregar un tag la lista.
@@ -227,7 +237,8 @@ describe('Escenario 03 - Test ContentManager - TAGS ', () => {
 });
 
 
-// ? DESCRIPTION
+//? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
+
 describe('Escenario 04 - Test ContentManager - Description ', () => {
 
      // 1 Caso
@@ -291,7 +302,8 @@ describe('Escenario 04 - Test ContentManager - Description ', () => {
 });
 
 
-// ? DURATION
+//? - - - - - - - - -  - - - DURATION  - - - - - - - - -  - - - //  
+
 describe('Escenario 05 - Test ContentManager - Duration ', () => {
 
     // Expect 2
@@ -364,7 +376,8 @@ describe('Escenario 05 - Test ContentManager - Duration ', () => {
     // })
 });
 
-// ? RATING
+//? - - - - - - - - -  - - - RATING  - - - - - - - - -  - - - //  
+
 describe('Escenario 06 - Test ContentManager - RATING ', () => {
 
     test('Caso 6.1 - Buscar por ratingSince & ratingUntil', () => {
@@ -401,7 +414,8 @@ describe('Escenario 06 - Test ContentManager - RATING ', () => {
 
 });
 
-// ? FECHA
+//? - - - - - - - - -  - - - FECHA  - - - - - - - - -  - - - //  
+
 describe('Escenario 07 - Test ContentManager - FECHA ', () => {
 
     // Ambos filtros creados nuevos exito.
@@ -461,3 +475,4 @@ describe('Escenario 07 - Test ContentManager - FECHA ', () => {
     });
 
 });
+

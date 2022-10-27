@@ -9,55 +9,81 @@ let customLogger = new CustomLogger();
 
 export class ContentItem {
     
-    private _title: string; 
-    private _contentType: IContentType;
-    private _tags: string[];
+    private _title: string;
     private _description: string;
+    private _contentType: IContentType;
+    private _tags: Array<string>;
     private _duration: Duration;
     private _rating: IContentItemRating;
     private _fechaCreacion: Date;
     
-    constructor(title: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], description: string = "", duration: Duration = new Duration(), rating: IContentItemRating = RatingDefault,
+    constructor(title: string = "",  description: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], duration: Duration = new Duration(), rating: IContentItemRating = RatingDefault,
         fechaCreacion: Date = fechaCreacionDefault
     ) {
         this._title = title;
+        this._description = description;
         this._contentType = contentType;
         this._tags = tags;
-        this._description = description;
         this._duration = duration;
         this._rating = rating;
         this._fechaCreacion = fechaCreacion;
     }
 
-    // Title
+    //* Title
     set title(title: string) {
         this._title = title;
     }
 
-    get title() {
+    get title() : string{
         return this._title
     }
 
-    // ContentType
+    //* Description
+    set description(description: string) {
+        this._description = description;
+    }
+
+    get description() : string {
+        return this._description
+    }
+
+  
+    /**
+     * Verifica si contiene  titulo o descripcion.
+     * @param titleOrDescription: string 
+     * @return Boolean. 
+     */
+    containDescriptionOrTitle(titleOrDescription: string) : Boolean {
+    
+        if (this._title.toLowerCase().includes(titleOrDescription.toLowerCase())) {
+            return true
+        } else if (this._description.toLowerCase().includes(titleOrDescription.toLowerCase())){
+            return true
+        } else {
+            return false
+        }
+
+    }
+    
+    //* ContentType
     set contentType(contentType: IContentType) {
         this._contentType = contentType;
     }
 
-    get contentType() {
+    get contentType() : IContentType {
         return this._contentType
     }
 
-    
-
-    // Tags
+    //* Tags
     set tags(tags: string[]) {
         this._tags = tags;
     }
 
-    get tags() {
+    get tags() : string[] {
         return this._tags
     }
     
+  
     addTag(tag: string) {
 
         if (this._tags.toString().toLocaleLowerCase().includes(tag)) {
@@ -67,14 +93,14 @@ export class ContentItem {
             this._tags.push(tag);
         }
         
-        customLogger.logDebug(`${this._tags}`)
+        customLogger.logDebug(`Se ha agregado ${tag}. El nuevo tagArray es:${this._tags}`)
     }
     
     removeTag(tag: string) {
         var index = this._tags.indexOf(tag);
         this._tags.splice(index, 1);
         
-        customLogger.logDebug(`${this._tags}`)
+        customLogger.logDebug(`Se ha removido ${tag}. El nuevo tagArray es:${this._tags}`)
     }
 
     /**
@@ -83,7 +109,7 @@ export class ContentItem {
      * @param tagArr string[];
      * @returns True or False.
      */
-    containsEveryTags(tagArr: string[]): Boolean {
+    containsEveryTags(tagArr: Array<string>): Boolean {
 
         let response = containsEveryElements(tagArr, this._tags)
         
@@ -104,7 +130,7 @@ export class ContentItem {
      * @param tagArr string[]
      * @returns True or false
      */
-    containTags(tagArr: string[]): Boolean {
+    containTags(tagArr: Array<string>): Boolean {
         
         let response = containsAtLeastOneElementTrue(tagArr, this._tags)
        
@@ -123,43 +149,10 @@ export class ContentItem {
         return response
     }
 
-    // Description
-    set description(description: string) {
-        this._description = description;
-    }
-
-    get description() {
-        return this._description
-    }
-
+  
+    //* Duration
     /**
-     * Verifica si contiene al menos una palabra.
-     * 
-     * @param description: string 
-     * @returns Boolean
-     */
-    containDescription(description : string): Boolean {
-                
-        let descriptionArray = description.split(" ")
-        let thisDescription = this._description.split(" ")
-
-        console.log("descriptionArray=", descriptionArray, "thisDescription=", thisDescription)
-        
-        for (let i = 0; i < descriptionArray.length; i++) {
-            for (let j = 0; j < thisDescription.length; j++) {
-                if (descriptionArray[i].toLowerCase() === thisDescription[j].toLowerCase()) {
-                    return true
-                }
-            }
-        }
-        
-        return false
-    }
-        
-    
-    // Duration
-    /**
-     * ! maxDuration | minDuration
+     * ! > maxDuration | < minDuration
      * @param duration :Duration 
      */
     set duration(duration: Duration) {
@@ -170,15 +163,15 @@ export class ContentItem {
         this._duration = duration
     }
 
-    get duration() {
+    get duration() : Duration{
         return this._duration
     }
 
     /**
      * Verificar si el contenido se encuentra entre los 2 parametros de duracion.
      * 
-     * @param durationSince type Duration
-     * @param durationUntil type Duration, default MaxDurationUntil
+     * @param durationSince: Duration =  MinDurationUntil
+     * @param durationUntil: Duration =  MaxDurationUntil
      * @returns Boolean
      */
     
@@ -223,16 +216,16 @@ export class ContentItem {
         this._rating = rating;
     }
 
-    get rating() {
+    get rating() : IContentItemRating {
         return this._rating;
     }
 
     
     /**
-     * Por defecto usa los minRatingFilter/maxRatingFilter de la aplicacion.
+     * Verifica si existe entre los dos filtros.
      * 
-     * @param1 RatingSince: IContentItemRating = minRatingFilter; 
-     * @param2 RatingUntil: IContentItemRating = maxRatingFilter;
+     * @param ratingSince: IContentItemRating = minRatingFilter; 
+     * @param ratingUntil: IContentItemRating = maxRatingFilter;
      * 
      * @return Boolean
      */
@@ -262,7 +255,11 @@ export class ContentItem {
         return false;       
     }
 
-    // Fecha Creacion
+    //* Fecha Creacion
+    /**
+     * ! < minFechaCreacion ! > maxFechaCreacion
+     * @param fechaCreacion: Date
+     */
     set fechaCreacion(fechaCreacion: Date) {
         if (fechaCreacion > maxFechaCreacion || fechaCreacion < minFechaCreacion) {
             throw new ErrorExternoAlPasarParams(`La fechaCreacion debe estar entre ${maxFechaCreacion} y ${minFechaCreacion} `)
@@ -270,10 +267,16 @@ export class ContentItem {
         this._fechaCreacion = fechaCreacion; 
     }
 
-    get fechaCreacion() {
+    get fechaCreacion() : Date {
         return this._fechaCreacion
     }
 
+    /**
+     * ! > maxFechaCreacionSince ! < minFechaCreacionSince;
+     * @param fechaCreacionSince : Date = FechaCreacionSinceDefault
+     * @param fechaCreacionUntil : Date = FechaCreacionUntilDefault
+     * @returns 
+     */
     containsFechaCreacion(fechaCreacionSince: Date = FechaCreacionSinceDefault, fechaCreacionUntil: Date = FechaCreacionUntilDefault) : Boolean{
         
         customLogger.logDebug(`Desde containsRating(), this._fechaCreacion=${this._fechaCreacion}, fechaCreacionSince=${fechaCreacionSince} y fechaCreacionUntil=${fechaCreacionUntil}`)
@@ -309,3 +312,16 @@ export class ContentItem {
     }
 };
 
+
+//   /**
+//      * Verificia si contiene en la descripcion.
+//      * @param description: string 
+//      * @returns Boolean
+//      */
+//     containDescription(description : string): Boolean {
+                
+//         if (this._description.toLocaleLowerCase().includes(description.toLowerCase())) {
+//            return true
+//        }
+//         return false
+//     }

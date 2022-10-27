@@ -41,15 +41,13 @@ export class ContentManager {
 
     /**
      * 
-     * @param words string (title or description)
+     * @param titleOrDescription:string (title or description)
      * @returns Lista con titulos or descriptions que coincidan estrictamente con la palabra.
      */
-    // Title or Description
-    getContentsItemsByTitleOrDescription(words: string): Array<ContentItem> {
-        // Crear un filtro.title y un filtro.description con la misma palabra, va a buscar por ambos.
+    // Title or Description 
+    getContentsItemsByTitleOrDescription(titleOrDescription: string): Array<ContentItem> {
         const filter = new ContentItemFilter();
-        filter.description = words;           
-        filter.title = words;
+        filter.titleOrDescription = titleOrDescription; 
         let response: Array<ContentItem> = []; 
         response = this._iContentManagerService.getContentsItemsByFilter(filter);
         this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
@@ -86,18 +84,13 @@ export class ContentManager {
     getContentsItemByDuration(durationSince: Duration = minDurationSince, durationUntil: Duration = maxDurationUntil): Array<ContentItem> {
 
         const filter = new ContentItemFilter();
-    
         this._customLog.logDebug(`ContentManager, La durationSince=${durationSince.getDuration()} y durationUntil ${durationUntil.getDuration()}.`)
-        
         filter.durationSince = durationSince;
         filter.durationUntil = durationUntil; 
-
         let response: Array<ContentItem> = []; 
-
         response = this._iContentManagerService.getContentsItemsByFilter(filter);
-        
+      
         return response
-
     }
 
 
