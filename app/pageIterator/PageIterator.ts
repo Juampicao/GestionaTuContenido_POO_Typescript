@@ -89,7 +89,7 @@ export class PageIterator {
     }
 
     get nextPage(): number{
-        if (this._nextPage <= 0) {
+        if (this._nextPage > this.lastPage) {
             throw new ErrorNoExisteLaPagina(`No existe la pagina=${this._nextPage}`)
         }
         return this._nextPage;
