@@ -1,4 +1,4 @@
-import { IOrderArray } from "../interfaces/IOrder";
+import { IOrderArray } from "../interfaces/IOrderArray";
 
 // Todo : Hacer que ande. 
 export default function orderArray(arr: Array<any>, filterField: string, order: IOrderArray = IOrderArray.ASC) {

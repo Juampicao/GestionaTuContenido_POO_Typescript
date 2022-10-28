@@ -20,13 +20,13 @@ export class CrearContentItemsBasicos {
     constructor() {
 
         this._contentItems = [];
-            this._contenido1 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido2 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido3 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido4 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido5 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido6 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video);
-            this._contenido7 = new ContentItem("Angular", "Aprendiendo Angular", IContentType.Video); 
+            this._contenido1 = new ContentItem("Angular", "1 Aprendiendo Angular", IContentType.Video);
+            this._contenido2 = new ContentItem("Angular", "2 Aprendiendo Angular", IContentType.Video);
+            this._contenido3 = new ContentItem("Angular", "3 Aprendiendo Angular", IContentType.Video);
+            this._contenido4 = new ContentItem("Angular", "4 Aprendiendo Angular", IContentType.Video);
+            this._contenido5 = new ContentItem("Angular", "5 Aprendiendo Angular", IContentType.Video);
+            this._contenido6 = new ContentItem("Angular", "6 Aprendiendo Angular", IContentType.Video);
+            this._contenido7 = new ContentItem("Angular", "7 Aprendiendo Angular", IContentType.Video); 
         this._contentItems.push(this._contenido1, this._contenido2, this._contenido3, this._contenido4, this._contenido5, this._contenido6, this._contenido7)
       }
 

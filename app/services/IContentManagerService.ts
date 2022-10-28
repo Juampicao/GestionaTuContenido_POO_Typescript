@@ -18,6 +18,9 @@ export interface IContentManagerService{
      * @return lista de ContentItem primero filtrados y luego paginados.
      */
     getContentItemsByFilterPaged(filter: ContentItemFilter, page: number, limit: number, order: any): ContentItem[] 
+
+
+    getTotalCuantityContentItems(filter:ContentItemFilter): number;
 }
 
 

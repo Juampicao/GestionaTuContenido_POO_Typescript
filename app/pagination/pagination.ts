@@ -1,5 +1,5 @@
 import { ErrorExternoAlPasarParams, NoHayResultadosError } from "../error/NoHayResultadosError";
-import { IOrderArray } from "../interfaces/IOrder";
+import { IOrderArray } from "../interfaces/IOrderArray";
 import { ContentItem } from "../models/ContentItem";
 import { CustomLogger } from "../utils/CustomLogger";
 import orderArray from "../utils/helpers";
@@ -27,37 +27,32 @@ export default class PagingUtils{
     let arrayOrdenado =  orderArray(array, "_contentType",IOrderArray.ASC)
     
     let skip: number = (page - 1) * limit; 
-    let contentItemFilterByPagination: Array<ContentItem> = array.slice(skip, limit * page)
+    let listContentItemFilterByPagination: Array<ContentItem> = array.slice(skip, limit * page)
     let totalPages: number = Math.ceil(array.length / limit)
     let lastPage: number = totalPages; 
-
-    //Todo hoy: Error si pido pag 10 y hay 5. Error. Hacer 1)pagination.test y contentmanagertest.
-    // ? Si page 2,limit 1. Total Items 3. Page x limit = 3.
-    // ! Page 3 limit 3. Total items 6. Page x limit = 9.
-    if ( page * limit > array.length) {
-      throw new NoHayResultadosError(`No hay resultados para Page=${page} Limit${limit}`)
-    }
     
     let nextPage: number = page + 1;
     let prevPage: number = page - 1; 
-
+    
     if (prevPage <= 0 || nextPage >= totalPages) { 
       prevPage = 1;     
       nextPage = totalPages; 
     }
+    
+    if ( page > totalPages) {
+      throw new NoHayResultadosError(`La pagina=${page} no existe.`)
+    }
 
-
-    if (contentItemFilterByPagination.length <= 0) {
-      throw new NoHayResultadosError(`No hay ningun resultado para esta busqueda: page=${page}, limit=${limit}, order=${order}`)
+    if (listContentItemFilterByPagination.length <= 0) {
+      throw new NoHayResultadosError(`No hay ningun resultado para esta busqueda: page=${page}, limit=${limit}`)
     } 
       
-
-    let response = { "page": page, "limit": limit, "order": order, "totalPages": totalPages, "lastPage":lastPage, "totalItems": array.length, "contentItemFilterByPagination": contentItemFilterByPagination, "nextPage": nextPage , "prevPage": prevPage }
+    let response = { "page": page, "limit": limit, "order": order, "totalPages": totalPages, "lastPage":lastPage, "totalItems": array.length, "ListontentItemFilterByPagination": listContentItemFilterByPagination, "nextPage": nextPage , "prevPage": prevPage }
     
     _customLogger.logDebug(`${response}`)
-    _customLogger.logDebug(`la lista filtrada es: ${(JSON.stringify(contentItemFilterByPagination, null, 2))}`)
+    _customLogger.logDebug(`la lista filtrada es: ${(JSON.stringify(listContentItemFilterByPagination, null, 2))}`)
     
-    return contentItemFilterByPagination; 
+    return listContentItemFilterByPagination; 
     
   }
 

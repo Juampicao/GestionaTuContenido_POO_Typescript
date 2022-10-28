@@ -28,14 +28,33 @@ export class ContentManagerServiceMock implements IContentManagerService{
     getAllContentsItems(): Array<ContentItem> {
         return this._contentItems
     }
+
+    /**
+     * @returns Cantidad total de items.
+     */
+    getTotalCuantityContentItems(filter: ContentItemFilter): number { 
+        let result = this.getContentsItemsByFilter(filter).length
+        return result;
+     };
     
-    getContentItemsByFilterPaged(filter: ContentItemFilter, page: number = 1, limit: number = 2, order: any = "desc") : ContentItem[] {
+    getContentItemsByFilterPaged(filter: ContentItemFilter, page: number = 1, limit: number = 2, order: any = "desc"): ContentItem[] {
+        
+        // Tip hoy, crear un anillo de contencion. Identifico el error aca. Si pasa este, voy a tener otra valla en el proximo metodo.
+        // Tipo hoy, cada capa tiene un error personalizado, con varios subERrores. pero tiro siempre el mismo general. Varios errores como no pude guardar un dato, no pude entrar. Pero lanzo solo un "error de base de datos".
+        // Tip hoy, no puede nuncar tirarme un 505 y se me bloquea. 
+        // Tip hoy, no debe saber con especificad el problema. Solo dejalo seguir.
+        
+        try {
+            let result = this.getContentsItemsByFilter(filter);
+            return PagingUtils.getContentsItemsByFilterByPagination(page,limit,order, result)
+        } catch (error) {
+            throw error             
+        }
 
-        let result = this.getContentsItemsByFilter(filter);
-
-        return PagingUtils.getContentsItemsByFilterByPagination(page,limit,order, result)
     }
     
+    //Tip Hoy: Errores border. Ejemplo archivo roto. s 
+
     /**
      * 
      * @param filter ContentItemFilter
