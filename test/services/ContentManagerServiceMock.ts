@@ -30,7 +30,7 @@ export class ContentManagerServiceMock implements IContentManagerService{
     }
 
     /**
-     * @returns Cantidad total de items.
+     * @returns Cantidad total de items coincidentes con este filtro.
      */
     getTotalCuantityContentItems(filter: ContentItemFilter): number { 
         let result = this.getContentsItemsByFilter(filter).length

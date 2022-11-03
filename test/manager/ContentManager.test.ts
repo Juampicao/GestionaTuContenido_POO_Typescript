@@ -476,3 +476,6 @@ describe('Escenario 07 - Test ContentManager - FECHA ', () => {
 
 });
 
+
+// Todo hoy, 
+// Preguntar metodo async

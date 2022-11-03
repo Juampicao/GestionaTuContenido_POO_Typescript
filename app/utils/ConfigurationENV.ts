@@ -64,7 +64,13 @@ export const FechaCreacionUntilDefault: Date = maxFechaCreacionUntil
 // - - - - --  ContentType Default - - - - - // 
 export const contentTypeDefault: IContentType = IContentType.Video; 
 
+// ? Page Iterator // 
+export const maxLimitByPage: number = 200;
+export const minLimitByPage: number = 1;
+
+
 //Todo Hoy => Export como json;
+
 
 
 

@@ -6,11 +6,15 @@ import { IContentItemRating } from "../interfaces/IContentItemRating";
 import { IContentType } from "../interfaces/IContentType";
 import { Duration } from "../models/Duration";
 import { FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxRatingFilter, minDurationSince, minRatingFilter } from "../utils/ConfigurationENV";
+import { PageIterator } from "../pageIterator/PageIterator";
 
+//Todo comentario a cada metodo.
 export class ContentManager {
 
     private _iContentManagerService: IContentManagerService; 
     private _customLog: CustomLogger; 
+
+    // geter y set de limit y page. Default ejemplo 5.
 
     constructor(iContentManagerService: IContentManagerService, customLog: CustomLogger = new CustomLogger() ) {
         this._iContentManagerService = iContentManagerService
@@ -67,14 +71,19 @@ export class ContentManager {
     }
 
     // Tags
-    getContentsItemsByTag(tags: string[]): Array<ContentItem> {
+    // Todo : PageIterator. Return Page Iterator. CAmbiar en todos.
+    getContentsItemsByTag(tags: string[]): PageIterator {
         const filter = new ContentItemFilter();
         filter.tags = tags;           
-        let response: Array<ContentItem> = []; 
-        response = this._iContentManagerService.getContentsItemsByFilter(filter);
-        this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
-        this._customLog.logDebug(`Devolviendo ${response}`);
-        return response; 
+        // let response: Array<ContentItem> = [];
+        // response = this._iContentManagerService.getContentsItemsByFilter(filter);
+        //TOdo, funcion de crear un control remoto. 
+        let pageIterator = new PageIterator(this._iContentManagerService,filter,1 )
+
+        // Todo, devolver el totalItems, para dar info.
+        // this._customLog.logInfo(`Mostrando` + response.length + `Elementos`);
+        // this._customLog.logDebug(`Devolviendo ${response}`);
+        return pageIterator; 
     }
 
 

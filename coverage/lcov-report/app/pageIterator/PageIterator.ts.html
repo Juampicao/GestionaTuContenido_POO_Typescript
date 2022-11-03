@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for test/services/ContentManagerServiceMock.ts</title>
+    <title>Code coverage report for app/pageIterator/PageIterator.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">test/services</a> ContentManagerServiceMock.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">app/pageIterator</a> PageIterator.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">79.24% </span>
+                <span class="strong">82.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/53</span>
+                <span class='fraction'>48/58</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.9% </span>
+                <span class="strong">45.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>29/44</span>
+                <span class='fraction'>5/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">93.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>14/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.84% </span>
+                <span class="strong">82.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>41/52</span>
+                <span class='fraction'>48/58</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -260,7 +260,59 @@
 <a name='L195'></a><a href='#L195'>195</a>
 <a name='L196'></a><a href='#L196'>196</a>
 <a name='L197'></a><a href='#L197'>197</a>
-<a name='L198'></a><a href='#L198'>198</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -271,7 +323,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -279,12 +330,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -295,23 +340,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -325,111 +391,146 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">67x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">67x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">67x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">279x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">266x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">256x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">44x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">44x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">212x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">204x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">196x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">196x</span>
-<span class="cline-any cline-yes">196x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">192x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">196x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">67x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">63x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -457,204 +558,259 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { NoHayResultadosError } from "../../app/error/NoHayResultadosError";
-import { IContentItemRating } from "../../app/interfaces/IContentItemRating";
-import { IContentType } from "../../app/interfaces/IContentType";
-import { ContentItem } from "../../app/models/ContentItem";
-import { ContentItemFilter } from "../../app/models/ContentItemFilter";
-import PagingUtils from "../../app/pagination/Pagination";
-import { IContentManagerService } from "../../app/services/IContentManagerService";
-import { CustomLogger } from "../../app/utils/CustomLogger";
-import { CrearDosItems } from "../utils/CrearDosItems";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+import { ContentManagerServiceMock } from "../../test/services/ContentManagerServiceMock";
+import { ErrorNoExisteLaPagina } from "../error/ErrorNoExisteLaPagina";
+import { ErrorReturnPaginaPageIterator } from "../error/ErrorReturnPaginaPageIterator";
+import { ErrorExternoAlPasarParams, NoHayResultadosError } from "../error/NoHayResultadosError";
+import { IOrderArray } from "../interfaces/IOrderArray";
+import { ContentItem } from "../models/ContentItem";
+import { ContentItemFilter } from "../models/ContentItemFilter";
+import PagingUtils from "../pagination/Pagination";
+&nbsp;
+import { IContentManagerService } from "../services/IContentManagerService";
+import { CustomLogger } from "../utils/CustomLogger";
 &nbsp;
 &nbsp;
-let customLogger = new CustomLogger()
+// export interface IPageIterator{
+//     hasNextPage(): boolean;
+//     hasPreviousPage(): boolean;
+//     nextPage(): number;
+//     previousPage(): number;
+// }
 &nbsp;
-export class ContentManagerServiceMock implements IContentManagerService{
+let _customLogger = new CustomLogger()
 &nbsp;
-    private _contentItems: Array&lt;ContentItem&gt;;
-&nbsp;
-    // Todo default itemBasico. Cambiar todos los test.
-    constructor(servicioCrearItemsPruebas = new CrearDosItems().obtenerContentItemsList2ContentItems()) {
-        this._contentItems = servicioCrearItemsPruebas;
-    }
- 
-<span class="fstat-no" title="function not covered" >    cr</span>ear(contentItem : ContentItem) {
-<span class="cstat-no" title="statement not covered" >       customLogger.logDebug("Creando un nuevo contentItem..."); </span>
-<span class="cstat-no" title="statement not covered" >        this._contentItems.push(contentItem)</span>
-    }
-  
-    getAllContentsItems(): Array&lt;ContentItem&gt; {
-        return this._contentItems
-    }
-&nbsp;
-    /**
-     * @returns Cantidad total de items coincidentes con este filtro.
-     */
-    getTotalCuantityContentItems(filter: ContentItemFilter): number { 
-        let result = this.getContentsItemsByFilter(filter).length
-        return result;
-     };
+export class PageIterator {
     
-    getContentItemsByFilterPaged(filter: ContentItemFilter, page: number = <span class="branch-0 cbranch-no" title="branch not covered" >1,</span> limit: number = <span class="branch-0 cbranch-no" title="branch not covered" >2,</span> order: any = <span class="branch-0 cbranch-no" title="branch not covered" >"desc")</span>: ContentItem[] {
-        
-        // Tip hoy, crear un anillo de contencion. Identifico el error aca. Si pasa este, voy a tener otra valla en el proximo metodo.
-        // Tipo hoy, cada capa tiene un error personalizado, con varios subERrores. pero tiro siempre el mismo general. Varios errores como no pude guardar un dato, no pude entrar. Pero lanzo solo un "error de base de datos".
-        // Tip hoy, no puede nuncar tirarme un 505 y se me bloquea. 
-        // Tip hoy, no debe saber con especificad el problema. Solo dejalo seguir.
-        
-        try {
-            let result = this.getContentsItemsByFilter(filter);
-            return PagingUtils.getContentsItemsByFilterByPagination(page,limit,order, result)
-        } catch (error) {
-            throw error             
-        }
-&nbsp;
-    }
+    private _service: IContentManagerService;
+    private _filter: ContentItemFilter;
     
-    //Tip Hoy: Errores border. Ejemplo archivo roto. s 
+    private _limit: number;
+    private _order: IOrderArray;
+    private _numberTotalContentItems: number;
+    private _listContentItems: Array&lt;ContentItem&gt;;
+    
+    private _currentPage: number;
+    private _nextPage: number;
+    // Eliminar previos y next.
+    private _previuosPage: number;
+    private _totalPages: number;
+    private _lastPage: number;
+    
+    constructor(service: IContentManagerService = <span class="branch-0 cbranch-no" title="branch not covered" >new ContentManagerServiceMock(),</span> filter: ContentItemFilter = <span class="branch-0 cbranch-no" title="branch not covered" >new ContentItemFilter(),</span> limit: number, order: IOrderArray = IOrderArray.ASC) {
+      
+        this._service = service;
+        this._currentPage = 1;
+        this._filter = filter
+        this._order = order;
+        // Todo, poner un maximo default para no rompeprse.
+        this._limit = limit
+        this._order = IOrderArray.ASC;
+        this._nextPage = this._currentPage + 1;
+        this._previuosPage = this._currentPage - 1;
+        this._numberTotalContentItems = this.getTotalCuantityContentItems();
+        // Todo contemplar que puede cambiar ante el boton nextPage(), funcionaria? Tengo 10 items, pero al hacer un nextPage(), se agregan 5 mas. Cambiaria esto.
+        //Todo si cambio el tamaño de pagina? Hacer como un metodo diferente.
+        //Tip hoy, un unico metodo que cambie una cosa. Achico mi margen de error.
+        this._totalPages = Math.ceil(this._numberTotalContentItems / this._limit)
+        this._lastPage = this._totalPages;
+        this._listContentItems = [];
+    }
 &nbsp;
     /**
      * 
-     * @param filter ContentItemFilter
-     * @returns Lista de contentItem filtrados
+     * @returns data to debug.
      */
-    getContentsItemsByFilter(filter: ContentItemFilter): Array&lt;ContentItem&gt;  {  
-&nbsp;
-        // Crear variable inicialziada en null.
-        let voidFilter = new ContentItemFilter();
-&nbsp;
-        let _filterContentList: Array&lt;ContentItem&gt; = []; 
-        
-        for (let i = 0; i &lt; this._contentItems.length; i++) {
-         
-            // Title
-            if (filter.title !== "") {
-                
-                if (this._contentItems[i].title.toLowerCase().includes(filter.title.toLocaleLowerCase())) {     
-                    
-                    _filterContentList.push(this._contentItems[i])
-                }
-&nbsp;
-                continue;
-            }
-&nbsp;
-            if (filter.description !== "") {
-                
-                // if (this._contentItems[i].containDescription(filter.description)) {     
-                if (this._contentItems[i].description.toLocaleLowerCase().includes(filter.description.toLocaleLowerCase())) {     
-                    
-                    _filterContentList.push(this._contentItems[i])
-                }
-                continue;
-            }
-&nbsp;
-            //Todo hoy test de esta funcion.
-            if (filter.titleOrDescription !== "") {
-                
-                if (this._contentItems[i].containDescriptionOrTitle(filter.titleOrDescription.toLocaleLowerCase())) {     
-                    
-                    _filterContentList.push(this._contentItems[i])
-                }
-                continue;
-            }
-                
-                
-            // Tags
-            if (filter.tags.length !== 0) {
-                
-                if (this._contentItems[i].containTags(filter.tags)) {
-                    
-                    _filterContentList.push(this._contentItems[i])
-                }
-                continue;
-            }
-            
-&nbsp;
-            // RATING
-            if (filter.ratingSince !== IContentItemRating.Void || filter.ratingUntil !== IContentItemRating.Void) {
-                
-                customLogger.logDebug(`desde el mock, el ratingSince=${filter.ratingSince}, ratingUntil ${filter.ratingUntil}`)
-                if (this._contentItems[i].containsRating(filter.ratingSince, filter.ratingUntil)) {
-&nbsp;
-                    _filterContentList.push(this._contentItems[i])
-                }
-                continue;
-            }
-&nbsp;
-            // Fecha
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (filter.fechaCreacionSince !== voidFilter.fechaCreacionUntil || <span class="branch-1 cbranch-no" title="branch not covered" >filter.fechaCreacionUntil !== voidFilter.fechaCreacionSince)</span> {
-                
-                customLogger.logDebug(`desde el mock, el fechaCreacionSince=${filter.fechaCreacionSince}, fechaCreacionUntil=${filter.fechaCreacionUntil}`)
-                if (this._contentItems[i].containsFechaCreacion(filter.fechaCreacionSince, filter.fechaCreacionUntil)) {
-&nbsp;
-                    _filterContentList.push(this._contentItems[i])
-                }
-&nbsp;
-                continue;
-            }
-&nbsp;
-            
-            // ContentType
-<span class="cstat-no" title="statement not covered" >            if (filter.contentType !== "") {</span>
-                
-<span class="cstat-no" title="statement not covered" >                if (this._contentItems[i].contentType === filter.contentType) {     </span>
-                    
-<span class="cstat-no" title="statement not covered" >                    _filterContentList.push(this._contentItems[i])</span>
-                }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                continue;</span>
-            }
-&nbsp;
-            // Duration
-            // ToDo =&gt; crear una por defecto, que si arroja todas, no lo paso por filtrado.
-<span class="cstat-no" title="statement not covered" >            if (filter.durationSince !== voidFilter.durationSince || filter.durationUntil !== voidFilter.durationUntil) {</span>
-<span class="cstat-no" title="statement not covered" >                customLogger.logDebug(`desde el MOCK, el filterDurationSince=${filter.durationSince}, filterDurationUntil=${filter.durationUntil}`)</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                if (this._contentItems[i].containsItemsBetweenTwoDurations(filter.durationSince, filter.durationUntil)) {</span>
-<span class="cstat-no" title="statement not covered" >                    _filterContentList.push(this._contentItems[i])</span>
-                }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >                continue;</span>
-            } 
+    showDataToDebug() {
+        console.log(`Page Iterator Debug: CurrentPage=${this._currentPage}, TotalPage=${this._totalPages}, LastPage = ${this._lastPage}, PreviosPage=${this._previuosPage}, NextPage ${this._nextPage}`)
+    }
 &nbsp;
 &nbsp;
-&nbsp;
-        }
-&nbsp;
-        if (_filterContentList.length &lt;= 0) {
-            // throw new NoHayResultadosError(`No hay ningun resultado para esta busqueda con estos filtros ${(JSON.stringify(filter, null, 2))} .`)
-            throw new NoHayResultadosError(`No hay ningun resultado para esta busqueda con estos filtros ${filter.toString()} .`)
-        } else {
-            return _filterContentList; 
-        }
+    // Todo isValidPage() =&gt; Como el set currentPage. Responsable de decir si es valida o no para todo. 
+    // Tip hoy. ¿Quien me modifica? Solo de adentro? 
+    // Tip hoy, si pasa mas de un minuto, verificar denuevo. Verificar el totalPages.
+    // Tip hoy cuestionar las responsabilidades. El set no seria validar. El validar es una función extra. 
     
+    /**
+     * 
+     * @param newCurrentPageNumber : Nueva pagina objetivo.
+     * @returns newCurrentPage, pero habiendo pasado los filtros de no ser &gt; last Page || &lt; firstPage.
+     */
+    set currentPage(newCurrentPageNumber: number) {
+        
+        let nuevaPagina = this._currentPage + newCurrentPageNumber; 
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if ( nuevaPagina &lt;= 0) {
+<span class="cstat-no" title="statement not covered" >            _customLogger.logDebug(`La pagina &lt;= 0, el  objetivo era: ${nuevaPagina}`)</span>
+<span class="cstat-no" title="statement not covered" >            throw new ErrorNoExisteLaPagina(`La nueva pagina actual no puede ser 0`)</span>
+        } else <span class="missing-if-branch" title="if path not taken" >I</span>if (nuevaPagina &gt; this.lastPage) {
+<span class="cstat-no" title="statement not covered" >            _customLogger.logDebug(`La  pagina objetivo es: ${nuevaPagina.toString()}`)</span>
+<span class="cstat-no" title="statement not covered" >            throw new ErrorNoExisteLaPagina(`La nueva pagina actual no puede ser mayor a la ultima`)</span>
+        }
+&nbsp;
+        this._currentPage = newCurrentPageNumber
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    ge</span>t currentPage(): number{
+<span class="cstat-no" title="statement not covered" >        return this._currentPage</span>
+    };
+&nbsp;
+    get totalPages(): number{
+        return this._totalPages;
+    }
+&nbsp;
+    get lastPage(): number{
+        return this._lastPage;
+    }
+&nbsp;
+    // Eliminar y pasar a 1 metodo
+    get previousPage(): number{
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (this._previuosPage &lt;= 0) {
+            throw new ErrorNoExisteLaPagina(`No existe la pagina=${this._previuosPage}`)
+        }
+<span class="cstat-no" title="statement not covered" >        return this._previuosPage;</span>
+    }
+&nbsp;
+    // Eliminar y pasar a 1 metodo
+    get nextPage(): number{
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (this._nextPage &gt; this.lastPage) {
+<span class="cstat-no" title="statement not covered" >            throw new ErrorNoExisteLaPagina(`No existe la pagina=${this._nextPage}`)</span>
+        }
+        return this._nextPage;
+    }
+ 
+    /**
+     * Se invoca automaticamente ante el creado del pageIterator, para completar la información principal(firstPage,lastPage,totalPages).
+     * @returns numero total de items con este filtro, sin paginar.
+     */
+    getTotalCuantityContentItems() {
+       return  this._service.getTotalCuantityContentItems(this._filter)
+    }
+&nbsp;
+    
+    getCurrentPageNumber() {
+        return this._currentPage;
+    };
+&nbsp;
+    //Todo guardar la lista de contentitems de la pagina actual (por perfomance) Si estoy en la 2. Voy a la 3, pero vuelvo. Pero puede estar desactualizado ojo.
+    // getCurrentPageItemList(){}
+&nbsp;
+&nbsp;
+    /**
+     * @return 1° Pagina de contentItems filtrados por el servicio elegido.
+     */
+    getFirstPage() {
+        this.getCurrentPageNumber();
+        this.showDataToDebug();
+       
+        let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, 1, this._limit, this._order);
+&nbsp;
+        this._listContentItems = result; 
+&nbsp;
+        return result;
+       
+    }   
+    
+    /**
+     *
+     *  @returns PreviosPage from currentPage filtrados por el servicio elegido.
+     */
+    // Todo completar los outputs.
+    getPreviusPage() : Array&lt;ContentItem&gt; { 
+        
+        this.showDataToDebug();
+    
+        let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, this.previousPage, this._limit, this._order);
+        
+<span class="cstat-no" title="statement not covered" >        this.currentPage = - 1;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this._listContentItems = result; </span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return result;      </span>
+              
+    }
+    
+    /**
+     * @returns NextPage from currentPage filtrados por el servicio elegido.
+     */
+    getNextPage() {
+&nbsp;
+        this.showDataToDebug();
+&nbsp;
+        let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, this.nextPage, this._limit, this._order);
+        
+        this.currentPage = +1;
+        
+        this._listContentItems = result; 
+&nbsp;
+        return result;    
+        
+    }
+    
+    /** 
+     * @returns LastPage filtrados por el servicio elegido.
+     *  Aclaracion: -1 es para pasar el setCurrentPage.
+     */
+    getLastPage() {
+        this.getCurrentPageNumber();
+        this.showDataToDebug();
+        let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, this.lastPage, this._limit, this._order);
+        
+        this.currentPage = this.lastPage - 1;
+&nbsp;
+        this._listContentItems = result; 
+&nbsp;
+        return result;
+     }
+    
+    /**
+     * 
+     * @param particularPage : Pagina objetivo.
+     * @return nueva Pagina particular elegida , filtrados por el servicio elegido.
+     */
+    getParticularPage(particularPage: number) {
+&nbsp;
+        this.showDataToDebug();
+        let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, particularPage, this._limit, this._order);
+        
+        this._listContentItems = result; 
+&nbsp;
+        return result;
+&nbsp;
     }
 &nbsp;
 }
 &nbsp;
 &nbsp;
+    // getPreviusPage() { 
+    //     this.getCurrentPageNumber();
+    //     this.showDataToDebug();
+      
+    //     try {
+        
+    //         let result: Array&lt;ContentItem&gt; = this._service.getContentItemsByFilterPaged(this._filter, this.previousPage, this._limit, this._order);
+    //         this.currentPage = - 1;
+    //         return result;      
+        
+    //     } catch (error) {
+    //         // Todo, esta bien esperar este error. Es el error que lanzo afuera, pero adentro tiene ErrorNoExistePagina.
+    //         throw new ErrorReturnPaginaPageIterator(`Error getPreviusPage(): ${error}`)
+    //     }
+    // }
+    
+//Tip hoy: Strategy, inyecto contenido estatico.
+//Tip hoy: SerivioPagador, objetivo cobrar. Puedo tener implementacion con tarjeta o qr. Es un strategy. No se casa con ninguno especifico.
+// Todo que hace la clase. SI cambia las condiciones de filtro, tengo que crear otra.
+//Tip hoy, recovery Points. Si hay un error, vuelve a antes.
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;</pre></td></tr></table></pre>
+// Todo metodo de totalItems o totalPage, para manejar los erroes desde aca. Llamar siempre en cada metodo.
+// Todo Page error.
+// Todo tryCatch errores del mock.</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
