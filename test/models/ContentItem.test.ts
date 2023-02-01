@@ -5,21 +5,20 @@ import { ContentItem } from "../../app/models/ContentItem";
 import { Duration } from "../../app/models/Duration";
 import { contentTypeDefault, fechaCreacionDefault, FechaCreacionSinceDefault, RatingDefault } from "../../app/utils/ConfigurationENV";
 import { CustomLogger } from "../../app/utils/CustomLogger";
-import { CrearDosItems } from "../utils/CrearDosItems";
+
 /**
  * 1) Title
- * 1 bis) Title or Description
- * 2) ContentType
- * 3) Tags
+ * 2) Title or Description
+ * 3) ContentType
  * 4) Description
  * 5) Duration
  * 6) Rating
  * 7) Fecha Creacion
+ * 8) Tags, removeTag, containTag, containsEveryTags, Add Tag.
  */
 
 
 let customLogger = new CustomLogger();
-
 
 //? - - - - - - - - -  - - - TITLE  - - - - - - - - -  - - - //  
 
@@ -32,52 +31,16 @@ describe('Escenario 01 - Test ContentItem - TITLE', () => {
         contenido1.title = "Angular";
     
         expect(contenido1.title).toBe("Angular");
-        expect(contenido1).not.toBe(null);
-    });
-
-
-    test('Caso 1.2- ContainTitleOrDescription - True Title', () => {
-    
-        let contenido1 = new ContentItem();
-        contenido1.title = "Esto es un nuevo titulo";
-        contenido1.description = "River Plate";
-
-        let response = contenido1.containDescriptionOrTitle("nuevo");
-        expect(response).toBe(true);
-
-    });
-
-    test('Caso 1.3- ContainTitleOrDescription - True Description', () => {
-    
-        let contenido1 = new ContentItem();
-        contenido1.title = "Esto es un nuevo titulo";
-        contenido1.description = "River Plate";
-
-        // let response = contenido1.containDescriptionOrTitle("River Plate");
-        let response = contenido1.containDescriptionOrTitle("ri");
-
-        expect(response).toBeTruthy()
-
-    });
-
-    test('Caso 1.4 - ContainTitleOrDescription - False ', () => {
-    
-        let contenido1 = new ContentItem();
-        contenido1.title = "Esto es un nuevo titulo";
-        contenido1.description = "River Plate";
-
-        let response = contenido1.containDescriptionOrTitle("NO TIENE");
-        expect(response).toBe(false);
-
     });
     
 
 });
 
 //? - - - - - - - - -  - - - TITLEORDESCRIPTION  - - - - - - - - -  - - - //  
-describe('Escenario 01 Bis - Test ContentItem - TITLEORDESCRIPTION', () => {
+describe('Escenario 02 - Test ContentItem - TITLEORDESCRIPTION', () => {
 
-    test('Caso 1.1 Bis -Solo Titulo Case Insensitive', () => {
+    //? Solo titulo
+    test('Caso 2.1  - Solo Titulo Case Insensitive', () => {
 
         let contenido1 = new ContentItem()
         contenido1.title = "El titulo es este";
@@ -88,8 +51,8 @@ describe('Escenario 01 Bis - Test ContentItem - TITLEORDESCRIPTION', () => {
         expect(response).toBeTruthy();
     });
 
- 
-    test('Caso 1.2 Bis -Solo Descripcion Case Insensitive', () => {
+    //? Solo descripcion
+    test('Caso 2.2  -Solo Descripcion Case Insensitive', () => {
 
         let contenido1 = new ContentItem()
         contenido1.description = "La descripcion";
@@ -100,7 +63,8 @@ describe('Escenario 01 Bis - Test ContentItem - TITLEORDESCRIPTION', () => {
         expect(response).toBeTruthy();
     });
 
-    test('Caso 1.3 Bis - Descripcion y titulo Case Insensitive', () => {
+    //? Titulo or descripcion
+    test('Caso 2.3 - Descripcion y titulo Case Insensitive', () => {
 
         let contenido1 = new ContentItem();
         contenido1.title = "El titulo es este";
@@ -112,22 +76,35 @@ describe('Escenario 01 Bis - Test ContentItem - TITLEORDESCRIPTION', () => {
         expect(response).toBeTruthy();
     });
    
+    //! No contiene titulo.
+    test('Caso 2.4 - Contiene titulo - False ', () => {
+    
+        let contenido1 = new ContentItem();
+        contenido1.title = "Esto es un nuevo titulo";
+        contenido1.description = "River Plate";
+
+        let response = contenido1.containDescriptionOrTitle("NO TIENE");
+        expect(response).toBeFalsy()
+
+    });
+
+    
 });
 
 //? - - - - - - - - -  - - - CONTENTTYPE  - - - - - - - - -  - - - //  
 
-describe('Escenario 02 - Test ContentItem - CONTENTTYPE', () => {
+describe('Escenario 03 - Test ContentItem - CONTENTTYPE', () => {
 
-    // Default
-    test('Caso 2.1 - Default', () => {
+    //? Default
+    test('Caso 3.1 - Default', () => {
         
         let contenido1 = new ContentItem()
        
         expect(contenido1.contentType).toBe(contentTypeDefault)
     }); 
 
-    // Nuevo
-    test('Caso 2.2 - Nuevo', () => {
+    //? Nuevo
+    test('Caso 3.2 - Nuevo', () => {
         
         let contenido1 = new ContentItem()
         contenido1.contentType = IContentType.Article
@@ -135,97 +112,24 @@ describe('Escenario 02 - Test ContentItem - CONTENTTYPE', () => {
         expect(contenido1.contentType).toBe(IContentType.Article)
     }); 
 
-});
-
-
-//? - - - - - - - - -  - - - TAGS  - - - - - - - - -  - - - //  
-
-describe('Escenario 03 - Test ContentItem - TAGS', () => {
-
-    test(`Caso 3.1 - TagsArray length 3`, () => {
-      
-        let contenido1 = new ContentItem()
-      
-        contenido1.tags = ["React", "Angular", "Typescript"]
-        
-        expect(contenido1.tags).toHaveLength(3)
-    });
-    
-
-    test('Caso 3.2 - Verificar si contiene "REACT".', () => {
+    //? Video
+    test('Caso 3.3 - Video', () => {
         
         let contenido1 = new ContentItem()
-      
-        contenido1.tags = ["React", "Angular", "Typescript"]
-
-        expect(contenido1.tags).toContain("React")
-    });
-
-    test('Caso 3.3 - Deben estar todos los elementos para ser true.', () => {
-        
-        let contenido1 = new ContentItem()
-
-        contenido1.tags = ["React", "Angular", "Typescript"]
-
-        let response = contenido1.containsEveryTags(["React", "Angular", "Typescript"])
-
-        expect(response).toBeTruthy();
+        contenido1.contentType = IContentType.Video
        
-    });
+        expect(contenido1.contentType).toBe(IContentType.Video)
+    }); 
 
-    test('Caso 3.4 - Deben estar todos los elementos para ser true.(caso falso) ', () => {
+        //? Caso Falso
+    test('Caso 3.4 - False Case', () => {
         
         let contenido1 = new ContentItem()
-
-        contenido1.tags = ["React", "Angular", "Typescript"]
-
-        let response = contenido1.containsEveryTags(["Este no lo contiene", "Angular", "Typescript"])
-
-        expect(response).toBeFalsy();
+        contenido1.contentType = IContentType.Video
        
-    });
+        expect(contenido1.contentType).not.toBe(IContentType.Article)
+    }); 
 
-    
-    test('Caso 3.5 - Si contiene al menos 1, es true. ', () => {
-        
-        let contenido1 = new ContentItem()
-
-        contenido1.tags = ["React", "Angular", "Typescript"]
-
-        let response = contenido1.containTags(["Este no lo contiene", "Angular", "Pyton"])
-
-        expect(response).toBeTruthy();
-       
-    });
-
-    test('Caso 3.6 - Si contiene al menos 1, es true.(expect false) ', () => {
-        
-        let contenido1 = new ContentItem()
-
-        contenido1.tags = ["React", "Angular", "Typescript"]
-
-        let response = contenido1.containTags(["Este no lo contiene", "Este tampoco", "Pyton"])
-
-        expect(response).toBeFalsy();
-       
-    });
-
-    // Etiqueta duplicada.
-    test('Caso 3.7 - Agregar una etiqueta duplicada ', () => {
-
-        try {
-            let contenido1 = new ContentItem()
-            contenido1.tags = ["Angular", "React"]
-            contenido1.addTag("angular")
-
-            let response = contenido1.tags
-            expect(response).toHaveLength(4);
-
-        } catch (error) {
-            expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
-        }
-  
-    });
 });
 
 //? - - - - - - - - -  - - - DESCRIPTION  - - - - - - - - -  - - - //  
@@ -236,43 +140,19 @@ describe('Escenario 04 - Test ContentItem - DESCRIPTION', () => {
 
         let contenido1 = new ContentItem();
         contenido1.description = "Esto es la descripcion de un contenido."
+
+        expect(contenido1.description).toBe("Esto es la descripcion de un contenido.")
     });
 
-    // // Caso Verdadero. 3 palabras, solo 1 coincide.
-    //  test('Caso 4.2 - containsDescription - True', () => {
+    test('Caso 4.1 - Nuevo', () => {
 
-    //     let contenido1 = new ContentItem();
-    //     contenido1.description = "Esto es la descripcion de un contenido."
-        
-    //      let response = contenido1.containDescription("Esto DEBERIA PASAR")
-         
-    //      expect(response).toBeTruthy()
-    //  });
-    
-    // // Caso falso. 3 palabras, ninguna coincide.
-    // test('Caso 4.3 - containsDescription - False', () => {
+        let contenido1 = new ContentItem();
+        contenido1.description = "Esto es la descripcion de un contenido."
 
-    //     let contenido2 = new ContentItem();
-    //     contenido2.description = "Description del contenido."
-        
-    //      let response = contenido2.containDescription("No deberia pasar")
-         
-    //      expect(response).toBeFalsy()
-    // });
-
-    //  // Caso falso. 3 palabras, ninguna coincide.
-    // test('Caso 4.4 - containsDescription  - case-sensitive', () => {
-
-    //     let contenido1 = new ContentItem();
-    //     contenido1.description = "verificando si contiene esto"
-        
-    //      let response = contenido1.containDescription("Contiene")
-         
-    //      expect(response).toBeTruthy()
-    // });
+        expect(contenido1.description).toBe("Esto es la descripcion de un contenido.")
+    });
 
 });
-
 
 //? - - - - - - - - -  - - - DURATION  - - - - - - - - -  - - - //  
 
@@ -460,6 +340,7 @@ describe('Escenario 05 - Test ContentItem - DURATION', () => {
 
 describe('Escenario 06 - Test ContentItem - RATING', () => {
 
+    //? Crear Rating
     test('Caso 6.1 - Crear un item con rating 5', () => {
         let contenido1 = new ContentItem();
         contenido1.rating = IContentItemRating.Cinco
@@ -469,6 +350,7 @@ describe('Escenario 06 - Test ContentItem - RATING', () => {
         expect(response).toBe(5)  
     });
 
+    //? Default 1 a 5 rating.
     test('Caso 6.2 - containsRating(), SIN FILTROS', () => {
          
         let contenido1 = new ContentItem();
@@ -480,17 +362,15 @@ describe('Escenario 06 - Test ContentItem - RATING', () => {
         
     });
 
-    // Solo SinceRating
+    //? Solo SinceRating
     test('Caso 6.3 - containsRating(), SinceRating = 2', () => {
          
         let contenido1 = new ContentItem();
         contenido1.rating = IContentItemRating.Cinco;
 
-        let sinceRating = IContentItemRating.Uno;
-        let response = contenido1.containsRating(sinceRating);
+        let response = contenido1.containsRating(IContentItemRating.Uno);
         
         expect(response).toBeTruthy();
-        
     });
 
     // Solo UntilRating
@@ -520,7 +400,48 @@ describe('Escenario 06 - Test ContentItem - RATING', () => {
         
      });
     
-    test('Caso 6.6- rating default', () => {
+    test('Caso 6.6- containsRating(), ambos parametros', () => {
+         
+        let contenido1 = new ContentItem();
+        contenido1.rating = IContentItemRating.Cinco;
+
+        let sinceRating = IContentItemRating.Cuatro;
+        let untilRating = IContentItemRating.Cinco;
+        let response = contenido1.containsRating(sinceRating, untilRating);
+        
+        expect(response).toBeTruthy();
+        
+    });
+    
+    test('Caso 6.7- containsRating(), ambos parametros - False', () => {
+         
+        let contenido1 = new ContentItem();
+        contenido1.rating = IContentItemRating.Tres;
+
+        let sinceRating = IContentItemRating.Cuatro;
+        let untilRating = IContentItemRating.Cinco;
+        let response = contenido1.containsRating(sinceRating, untilRating);
+        
+        expect(response).toBeFalsy();
+        
+    });
+    
+    
+    // Todo Deberia dar un error 
+    test('Caso 6.8- containsRating(), ambos parametros - Since mas grande que Until', () => {
+         
+        let contenido1 = new ContentItem();
+        contenido1.rating = IContentItemRating.Tres;
+
+        let sinceRating = IContentItemRating.Cuatro;
+        let untilRating = IContentItemRating.Tres;
+        let response = contenido1.containsRating(sinceRating, untilRating);
+        
+        expect(response).toBeFalsy();
+        
+     });
+    
+    test('Caso 6.9- rating default', () => {
          
         let contenido1 = new ContentItem();
 
@@ -686,3 +607,157 @@ describe('Escenario 07 - Test ContentItem - Fecha Creacion', () => {
         }
     }); 
 });
+
+
+
+//? - - - - - - - - -  - - - 8  TAGS  - - - - - - - - -  - - - //
+
+
+describe('Escenario 08 - Test ContentItem - TAGS', () => {
+
+    //? 3 Tags.
+    test(`Caso 8.1 - TagsArray length 3`, () => {
+      
+        let contenido1 = new ContentItem()
+      
+        contenido1.tags = ["React", "Angular", "Typescript"]
+        
+        expect(contenido1.tags).toHaveLength(3)
+    });
+    
+
+//? - - - - - - Contain Tag   - - - -  - - - //  
+
+    //? 1 Tag.
+    test('Caso 8.2 - containTags - Verificar si contiene "REACT".', () => {
+        
+        let contenido1 = new ContentItem()
+      
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+        let response = contenido1.containTags(["React"]);
+
+        expect(response).toBeTruthy();
+    });
+
+    //? Contiene uno pero otros no.
+    test('Caso 8.3 - containTags - Si contiene al menos 1, es true. ', () => {
+        
+        let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+        let response = contenido1.containTags(["Este no lo contiene", "Angular", "Pyton"])
+
+        expect(response).toBeTruthy();
+       
+    });
+    
+    //! No Contiene ninguno.
+    test('Caso 8.4-  containTags - Si contiene al menos 1, es true.(expect false) ', () => {
+        
+        let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+        let response = contenido1.containTags(["Este no lo contiene", "Este tampoco", "Pyton"])
+
+        expect(response).toBeFalsy(); 
+    });
+
+//? - - - - -  - Contains Every Tag   - - -   - - - //
+    
+    //? Contiene todos true.
+    test('Caso 8.5-  containTags - Deben estar todos los elementos para ser true.', () => {
+        
+        let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+        let response = contenido1.containsEveryTags(["React", "Angular", "Typescript"])
+
+        expect(response).toBeTruthy();
+       
+    });
+
+    //! No contiene todos.
+    test('Caso 8.6 - containTags - Deben estar todos los elementos para ser true.(caso falso) ', () => {
+        
+        let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+        let response = contenido1.containsEveryTags(["Este no lo contiene", "Angular", "Typescript"])
+
+        expect(response).toBeFalsy();
+       
+    });
+
+
+//? - - - - -  - Add Tag    - - -   - - - //
+
+    //? Agregar una etiqueta 
+    test('Caso 8.7 - AddTag - Agregar una etiqueta duplicada ', () => {
+
+        let contenido1 = new ContentItem()
+        contenido1.tags = ["Angular", "React"]
+        contenido1.addTag("Javascript")
+
+        expect(contenido1.tags).toStrictEqual(["Angular","React", "Javascript"])
+
+    });
+
+    //! Etiqueta duplicada.
+    test('Caso 8.8 - AddTag - Agregar una etiqueta duplicada ', () => {
+
+        try {
+            let contenido1 = new ContentItem()
+            contenido1.tags = ["Angular", "React"]
+            contenido1.addTag("angular")
+
+            let response = contenido1.tags
+            expect(response).toHaveLength(4);
+
+        } catch (error) {
+            expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
+        }
+    });
+
+//? - - - - -  - Remvoe Tag    - - -   - - - //
+    
+    //? Eliminar 1.
+    test('Caso 8.9 -Remove Tag  - Remove una etiqueta  ', () => {
+    
+        let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+         contenido1.removeTag("React")
+
+        expect(contenido1.tags).toStrictEqual(["Angular", "Typescript"]);
+    });
+
+
+    //! Error no existe la etiqueta a remover.
+    test('Caso 8.10 - Remove una etiqueta inexistente ', () => {
+    
+       try {
+         let contenido1 = new ContentItem()
+
+        contenido1.tags = ["React", "Angular", "Typescript"]
+
+         contenido1.removeTag("No existe")
+
+        expect(contenido1.tags).toStrictEqual(["React", "Angular", "Typescript"]);
+       } catch (error) {
+           
+        expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
+       }
+    });
+
+});
+
+
+
+
+

@@ -15,6 +15,8 @@ import { CustomLogger } from "../utils/CustomLogger";
 
 let _customLogger = new CustomLogger()
 
+//TODO hoy. Get totalPages() como calculo.
+
 export class PageIterator {
     
     private _service: IContentManagerService;
@@ -28,6 +30,13 @@ export class PageIterator {
     private _currentPage: number;
     private _totalPages: number;
     
+    /**
+     * Page Iterator, retornar de los contenidos por determinados filtros.
+     * @param service servicio a utilizar
+     * @param filter filtro a buscar
+     * @param limit limite de contenidos por pagina
+     * @param order orden para retornar los contenidos en la pagina
+     */
     constructor(service: IContentManagerService = new ContentManagerServiceMock(), filter: ContentItemFilter = new ContentItemFilter(), limit: number, order: IOrderArray = IOrderArray.ASC) {   
         this._service = service;
         this._currentPage = 1;
@@ -38,6 +47,7 @@ export class PageIterator {
         this._numberTotalContentItems = this.getTotalCuantityContentItems();
         this._totalPages = Math.ceil(this._numberTotalContentItems / this._limit);
         this._listContentItems = [];
+        
     }
 
     /**
@@ -45,7 +55,7 @@ export class PageIterator {
      * @param limit : number
      * @returns limit by page
      */
-    isValidLimit(limit: number) : number{
+    private isValidLimit(limit: number) : number{
         if (limit > maxLimitByPage || limit < minLimitByPage) {
             throw new ErrorExternoAlPasarParams(`el limite por pagina no puede menor a ${minLimitByPage} ni ser mayor a ${maxLimitByPage}`)
         } 
@@ -57,7 +67,7 @@ export class PageIterator {
      * @param page : number
      * @returns Boolean
      */
-    isValidPage(page: number): number {
+    private isValidPage(page: number): boolean {
         if (page <= 0) {
             _customLogger.logDebug(`La pagina <= 0, el  objetivo era: ${page}`)
             throw new ErrorNoExisteLaPagina(`La pagina no puede ser <= 0`);
@@ -65,13 +75,13 @@ export class PageIterator {
             _customLogger.logDebug(`La  pagina objetivo es: ${page}`)
             throw new ErrorNoExisteLaPagina(`La pagina no puede ser mayor a la ultima`)
         }
-        return page; 
+        return true; 
     }
 
     /**
      * Actualiza los datos del pageIterator ante un cambio en el limit.
      */
-    updateDataPageIterator() {
+    private updateDataPageIterator() {
         this._numberTotalContentItems = this.getTotalCuantityContentItems();
         this._totalPages = Math.ceil(this._numberTotalContentItems / this._limit)
     }
@@ -79,18 +89,22 @@ export class PageIterator {
     /**
      * @returns data to debug.
      */
-    showDataToDebug() {
-        console.log(`Page Iterator Debug: CurrentPage=${this._currentPage}, TotalPage=${this._totalPages}, LastPage = ${this.getLastPageNumber()}, PreviosPage=${this._currentPage - 1}, NextPage ${this._currentPage + 1}`)
+    private showDataToDebug() {
+        console.log(`Page Iterator Debug: CurrentPage=${this._currentPage}, TotalPage=${this._totalPages}, LastPage = ${this._totalPages}, PreviosPage=${this._currentPage - 1}, NextPage ${this._currentPage + 1}`)
     }
 
-    set currentPage(page: number) {
+    /**
+     * Setea la pagina actual
+     * @page : numero de pagina.
+     */
+    private set currentPage(page: number) {
         if (this.isValidPage(page)) {
             this._currentPage = page; 
         } 
     }
 
     /**
-     * Update de los datos de totalPages y lastPage cuando se cambia el limit.
+     * Cambia el limit de items por página. Al realizar un cambio, se actualiza automaticamente el totalPages. 
      * @param limit: number
      */
     set limit(limit : number) {
@@ -98,9 +112,11 @@ export class PageIterator {
         this.updateDataPageIterator();
     }
 
+    /**
+     * @return el limit de contents by page.
+     */
     get limit(): number{
         return this._limit;
-
     }
  
     /**
@@ -111,69 +127,85 @@ export class PageIterator {
        return  this._service.getTotalCuantityContentItems(this._filter)
     }
 
+    /**
+     * @return numero de pagina actual
+     */
     getCurrentPageNumber() :number{
         return this._currentPage;
     };
 
+    /**
+     * 
+     * @returns numero de paginas totales.
+     */
     getTotalPageNumber(): number {
         return this._totalPages; 
     }
     
-    getLastPageNumber(): number{
-        return this._totalPages; 
-    }
 
     /**
     * @return 1° Pagina de contentItems filtrados por el servicio elegido.
     */
-    getFirstPage() {
+    public getFirstPage() {
+        
         this.showDataToDebug();
        
         try {   
             let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, 1, this._limit, this._order);
 
-            this.currentPage = this.isValidPage(1);
+            this.currentPage = 1 
+
+            this.isValidPage(this._currentPage);
 
             this._listContentItems = result; 
 
             return result;
+
         } catch (error) {
             throw new ErrorReturnPaginaPageIterator(`Error getFirstPage(): ${error}`)
         }
     }   
     
     /**
-     *
      *  @returns PreviosPage from currentPage filtrados por el servicio elegido.
      */
-    getPreviousPage(): Array<ContentItem> { 
+    public getPreviousPage(): Array<ContentItem> { 
       
         this.showDataToDebug();
 
-        let previousPage = this.isValidPage(this._currentPage - 1); 
-       
         try {
+            let previousPage = this._currentPage - 1;
+           
+            this.isValidPage(previousPage);
+            
             let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, previousPage, this._limit, this._order);
+
             this.currentPage = previousPage; 
+
             this._listContentItems = result; 
 
             return result;         
 
         } catch (error) {
-            throw new ErrorReturnPaginaPageIterator(`Error getPreviosPage(): ${error}`)
+            //TODO en todos los errores, debugear en todos los errores. 
+            throw new ErrorReturnPaginaPageIterator(`Error getPreviosPage: ${error}`)
         }
     }
     
     /**
      * @returns NextPage from currentPage filtrados por el servicio elegido.
      */
-    getNextPage() : Array<ContentItem> {
+    public getNextPage() : Array<ContentItem> {
 
         this.showDataToDebug();
 
-        let nextPage = this.isValidPage(this._currentPage + 1); 
-
+        
         try {
+            
+            let nextPage = this._currentPage + 1;
+
+            this.isValidPage(nextPage);  
+
             let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, nextPage , this._limit, this._order);
             
             this.currentPage = nextPage;
@@ -190,16 +222,15 @@ export class PageIterator {
     
     /** 
      * @returns LastPage filtrados por el servicio elegido.
-     *  Aclaracion: -1 es para pasar el setCurrentPage.
      */
-    getLastPage() : Array<ContentItem> {
+    public getLastPage() : Array<ContentItem> {
         this.showDataToDebug();
 
         try {
         
-            let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, this.getLastPageNumber(), this._limit, this._order);
+            let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, this._totalPages, this._limit, this._order);
         
-            this.currentPage = this.getLastPageNumber(); 
+            this.currentPage = this._totalPages; 
 
             this._listContentItems = result; 
 
@@ -212,15 +243,17 @@ export class PageIterator {
     
     /**
      * 
-     * @param particularPage : Pagina objetivo.
+     * @param page : Pagina objetivo.
      * @return nueva Pagina particular elegida , filtrados por el servicio elegido.
      */
-    getParticularPage(page: number) : Array<ContentItem> {
+    public getParticularPage(page: number) : Array<ContentItem> {
         this.showDataToDebug();
 
         try {
             
-            let particularPage = this.isValidPage(page); 
+            let particularPage = page;
+
+            this.isValidPage(page); 
     
             let result: Array<ContentItem> = this._service.getContentItemsByFilterPaged(this._filter, particularPage, this._limit, this._order);
             
@@ -229,6 +262,7 @@ export class PageIterator {
             this._listContentItems = result; 
     
             return result;
+
          } catch (error) {
             throw new ErrorReturnPaginaPageIterator(`Error getNextPage: ${error}`)
         }
@@ -286,6 +320,8 @@ export class PageIterator {
 
  //Todo guardar la lista de contentitems de la pagina actual (por perfomance) Si estoy en la 2. Voy a la 3, pero vuelvo. Pero puede estar desactualizado ojo.
     // getCurrentPageItemList(){}
+    
+    
 
 
 // Todo metodo de totalItems o totalPage, para manejar los erroes desde aca. Llamar siempre en cada metodo.
@@ -306,4 +342,12 @@ export class PageIterator {
     //         throw new ErrorNoExisteLaPagina(`No existe la pagina=${this._nextPage}`)
     //     }
     //     return this._nextPage;
+    // }
+    
+    
+    
+    
+    //TIP HOY, eliminar esto. Simple. Si quiero saber esto, getTotalPages(). preivous? -1.
+    // getLastPageNumber(): number{
+    //     return this._totalPages; 
     // }

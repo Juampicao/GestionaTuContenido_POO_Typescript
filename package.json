@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --testPathPattern=test",
     "test-coverage": "jest --coverage",
-    "test-jest": "jest"
+    "test-jest": "jest",
+    "single-test": "jest test/services/ContentManagerService.test.ts"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "install": "^0.13.0"
   },
   "dependencies-comentarios": {
-    "Manejando comentarios": "Aca escribir comentario..."
+    "Manejando comentarios": "Aca escribir comentario...",
+    "test:single": "jest test/services/ContentManagerService.test.ts"
   }
 }

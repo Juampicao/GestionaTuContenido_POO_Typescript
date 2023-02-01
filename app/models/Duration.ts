@@ -12,7 +12,7 @@ export class Duration {
     }
 
     /**
-     * Crear la duracion desde este método, tiene las restricciones (numeros negativos, numeros maximos.)
+     * Crear la duracion.
      * ! Ningun param puede ser negativo
      * @param hh number 
      * @param mm number 
@@ -29,20 +29,37 @@ export class Duration {
 
     }
 
+    /**
+     * 
+     * @returns la duración en digitos 00:00:00
+     */
     getDuration() {
         let response = `${this.padTo2Digits(this._hh)+`:`+ this.padTo2Digits(this._mm)+`:`+this.padTo2Digits(this._ss)}`
         return response;
     }
-
+    
+    /**
+     * 
+     * @returns la duracion en estilo hh:00mm:00:ss:00
+     */
     getDurationWithLetter() {
         let response = `${this.padTo2Digits(this._hh)+`hh`+`:`+ this.padTo2Digits(this._mm)+`mm`+`:`+this.padTo2Digits(this._ss)+`ss`}`
         return response;
     }
 
+    /**
+     * 
+     * @returns la duration en estilo hours: 00 minutes: 00 seconds:00
+     */
     getDurationWithDescription() {
         return `${this.padTo2Digits(this._hh)} hours: ${this.padTo2Digits(this._mm)} minutes: ${this.padTo2Digits(this._ss)} seconds`
     }
 
+    /**
+     * 
+     * @param duration Duration
+     * @returns la duration pasada a segundos.
+     */
     getDurationTotalInSeconds(duration: Duration) : number {
     
         let response = duration.getDuration();
@@ -55,6 +72,11 @@ export class Duration {
         return totalSecondsDuration;
     }
 
+    /**
+     * 
+     * @param duration Duration
+     * @returns la duracion pasada a minutos.
+     */
     getDurationTotalInMinutes(duration: Duration) : number {
     
         let response = duration.getDuration();
@@ -67,7 +89,6 @@ export class Duration {
         return totalSecondsDuration;
     }
 
-    // Convert 2 digits number
     padTo2Digits(num : number) {
         return num.toString().padStart(2, '0');
     }

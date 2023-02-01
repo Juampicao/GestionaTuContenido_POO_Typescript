@@ -1,6 +1,6 @@
 import { ErrorExternoAlPasarParams } from "../error/NoHayResultadosError";
-import { IContentType } from "../interfaces/IContentType";
 import { IContentItemRating } from "../interfaces/IContentItemRating";
+import { IContentType } from "../interfaces/IContentType";
 import { contentTypeDefault, fechaCreacionDefault, FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxDurationVideo, maxFechaCreacion, maxFechaCreacionSince, maxRatingFilter, minDurationSince, minDurationVideo, minFechaCreacion, minFechaCreacionSince, minRatingFilter, RatingDefault } from "../utils/ConfigurationENV";
 import { CustomLogger } from "../utils/CustomLogger";
 import { Duration } from "./Duration";
@@ -17,6 +17,16 @@ export class ContentItem {
     private _rating: IContentItemRating;
     private _fechaCreacion: Date;
     
+    /**
+     * 
+     * @param title  Titulo.
+     * @param description Descripcion.
+     * @param contentType tipo de contenido : IContentType.
+     * @param tags etiquetas para categorizar el contentItem.
+     * @param duration duración.
+     * @param rating ranking personal.
+     * @param fechaCreacion fecha que fue creado.
+     */
     constructor(title: string = "",  description: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], duration: Duration = new Duration(), rating: IContentItemRating = RatingDefault,
         fechaCreacion: Date = fechaCreacionDefault
     ) {
@@ -29,20 +39,32 @@ export class ContentItem {
         this._fechaCreacion = fechaCreacion;
     }
 
-    //* Title
+    /**
+     * Setear el titulo del contentItem
+     * @param title: Titulo
+     */
     set title(title: string) {
         this._title = title;
     }
 
+    /**
+     * @return title del contentItem.
+     */
     get title() : string{
         return this._title
     }
 
-    //* Description
+    /**
+    * Setear la descripción del contentItem
+    * @param description: descripción.
+    */
     set description(description: string) {
         this._description = description;
     }
 
+    /**
+     * @return description del contentItem
+     */
     get description() : string {
         return this._description
     }
@@ -65,25 +87,40 @@ export class ContentItem {
 
     }
     
-    //* ContentType
+    /**
+     * Setear el tipo de contenido del contentItem
+     * @param contentType Tipo de contenido : IContentType
+     */
     set contentType(contentType: IContentType) {
         this._contentType = contentType;
     }
 
+    /**
+     * @return tipo de contenido del contentItem
+     */
     get contentType() : IContentType {
         return this._contentType
     }
 
-    //* Tags
+    /**
+     * Setear los tags del contentItem
+     * @param tags: etiquetas.
+     */
     set tags(tags: string[]) {
         this._tags = tags;
     }
 
+    /**
+     * @return tags del contentItem
+     */
     get tags() : string[] {
         return this._tags
     }
     
-  
+    /**
+     * Agrega 1 etiqueta al contentItem
+     * @param tag : Etiqueta a agregar.
+     */
     addTag(tag: string) {
 
         if (this._tags.toString().toLocaleLowerCase().includes(tag)) {
@@ -96,16 +133,24 @@ export class ContentItem {
         customLogger.logDebug(`Se ha agregado ${tag}. El nuevo tagArray es:${this._tags}`)
     }
     
+    /**
+     * Elimina una etiqueta del contentItem
+     * @param tag : Etiqueta a eliminar.
+     */
     removeTag(tag: string) {
-        var index = this._tags.indexOf(tag);
-        this._tags.splice(index, 1);
-        
-        customLogger.logDebug(`Se ha removido ${tag}. El nuevo tagArray es:${this._tags}`)
+
+        if (this.containTags([tag])) {
+            var index = this._tags.indexOf(tag);
+            this._tags.splice(index, 1);
+            
+            customLogger.logDebug(`Se ha removido ${tag}. El nuevo tagArray es:${this._tags}`)
+        } else {
+            throw new ErrorExternoAlPasarParams(`No existe la etiqueta ${tag} que se quiso eliminar.`)
+        }
     }
 
     /**
      * Verifica si contiene TODAS las etiquetas.
-     * 
      * @param tagArr string[];
      * @returns True or False.
      */
@@ -126,7 +171,6 @@ export class ContentItem {
 
     /**
      * Verifica si contiene AL MENOS UNA de las etiquetas.
-     * 
      * @param tagArr string[]
      * @returns True or false
      */
@@ -150,10 +194,10 @@ export class ContentItem {
     }
 
   
-    //* Duration
     /**
+     * Setea la duration del ContentItem.
      * ! > maxDuration | < minDuration
-     * @param duration :Duration 
+     * @param duration duration del contentItem :Duration 
      */
     set duration(duration: Duration) {
         
@@ -163,6 +207,9 @@ export class ContentItem {
         this._duration = duration
     }
 
+    /**
+     * @return la duration del contentItem.
+     */
     get duration() : Duration{
         return this._duration
     }
@@ -212,10 +259,17 @@ export class ContentItem {
         
     }
 
+    /**
+     * Setea el ranking del ContentItem.
+     * @param rating  rating del contentItem : IContentItemRating.
+     */
     set rating(rating: IContentItemRating) {
         this._rating = rating;
     }
 
+    /**
+     * @return rating del contentItem.
+     */
     get rating() : IContentItemRating {
         return this._rating;
     }
@@ -234,15 +288,24 @@ export class ContentItem {
         customLogger.logDebug(`Desde containsRating(), this._rating=${this._rating}, ratingSince=${ratingSince} y ratingUntil=${ratingUntil}`)
          
         // Ambos parametros existen.
+        // if (ratingSince !== undefined) {
+
+        //     if ( ratingSince <= this._rating && this._rating <= ratingUntil) {
+        //         return true
+        //     } else { 
+        //         return false; 
+        //     }
+        // }
         if (ratingSince !== undefined) {
 
-            if ( ratingSince <= this._rating && this._rating <= ratingUntil) {
+            if ( this._rating >= ratingSince && this._rating <= ratingUntil) {
                 return true
             } else { 
                 return false; 
             }
         }
 
+        
          // Until no existe.
         else if (ratingUntil === undefined) {
             if (ratingSince <= this._rating) {  
@@ -255,10 +318,10 @@ export class ContentItem {
         return false;       
     }
 
-    //* Fecha Creacion
     /**
+     * Setea la fecha de creación del ContentItem.
      * ! < minFechaCreacion ! > maxFechaCreacion
-     * @param fechaCreacion: Date
+     * @param fechaCreacion: Date de creacion.
      */
     set fechaCreacion(fechaCreacion: Date) {
         if (fechaCreacion > maxFechaCreacion || fechaCreacion < minFechaCreacion) {
@@ -272,14 +335,15 @@ export class ContentItem {
     }
 
     /**
+     * Verifica si el contentItem se encuentra en el rango de dos fechas.
      * ! > maxFechaCreacionSince ! < minFechaCreacionSince;
      * @param fechaCreacionSince : Date = FechaCreacionSinceDefault
      * @param fechaCreacionUntil : Date = FechaCreacionUntilDefault
-     * @returns 
+     * @returns boolean
      */
     containsFechaCreacion(fechaCreacionSince: Date = FechaCreacionSinceDefault, fechaCreacionUntil: Date = FechaCreacionUntilDefault) : Boolean{
         
-        customLogger.logDebug(`Desde containsRating(), this._fechaCreacion=${this._fechaCreacion}, fechaCreacionSince=${fechaCreacionSince} y fechaCreacionUntil=${fechaCreacionUntil}`)
+        customLogger.logDebug(`Desde containsFechaCreacion(), this._fechaCreacion=${this._fechaCreacion}, fechaCreacionSince=${fechaCreacionSince} y fechaCreacionUntil=${fechaCreacionUntil}`)
          
          if (fechaCreacionSince > maxFechaCreacionSince || fechaCreacionSince < minFechaCreacionSince) {
             throw new ErrorExternoAlPasarParams(`La fechaCreacionSince debe estar entre ${minFechaCreacionSince} y ${maxFechaCreacionSince} `)
@@ -313,15 +377,3 @@ export class ContentItem {
 };
 
 
-//   /**
-//      * Verificia si contiene en la descripcion.
-//      * @param description: string 
-//      * @returns Boolean
-//      */
-//     containDescription(description : string): Boolean {
-                
-//         if (this._description.toLocaleLowerCase().includes(description.toLowerCase())) {
-//            return true
-//        }
-//         return false
-//     }

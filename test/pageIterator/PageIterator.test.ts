@@ -1,12 +1,15 @@
-import { ErrorNoExisteLaPagina } from "../../app/error/ErrorNoExisteLaPagina";
 import { ErrorReturnPaginaPageIterator } from "../../app/error/ErrorReturnPaginaPageIterator";
-import { ErrorExternoAlPasarParams, NoHayResultadosError } from "../../app/error/NoHayResultadosError";
+import { ErrorExternoAlPasarParams } from "../../app/error/NoHayResultadosError";
+import { IContentType } from "../../app/interfaces/IContentType";
 import { IOrderArray } from "../../app/interfaces/IOrderArray";
 import { ContentItem } from "../../app/models/ContentItem";
 import { ContentItemFilter } from "../../app/models/ContentItemFilter";
 import { PageIterator } from "../../app/pageIterator/PageIterator";
+import { CustomLogger } from "../../app/utils/CustomLogger";
 import { ContentManagerServiceMock } from "../services/ContentManagerServiceMock";
 import { CrearContentItemsBasicos } from "../utils/CrearContentItemsBasicos";
+
+let customLogger = new CustomLogger(); 
 
 describe('Escenario 1 - PageIterator - Principal ', () => {
     
@@ -23,7 +26,7 @@ describe('Escenario 1 - PageIterator - Principal ', () => {
         let pageIterator = new PageIterator(serviceMock, filter, 3, IOrderArray.ASC)
         
         let totalPages = pageIterator.getTotalPageNumber();
-        let lastPage = pageIterator.getLastPageNumber();
+        let lastPage = pageIterator.getTotalPageNumber() ;
         let currentPage = pageIterator.getCurrentPageNumber();
         let nextPage = pageIterator.getCurrentPageNumber() + 1;
        
@@ -121,7 +124,7 @@ describe('Escenario 2 - PageIterator - GetPreviousPage()', () => {
             expect(previousPage).toBe(0);
         } catch (error) {
 
-            expect(error).toBeInstanceOf(ErrorNoExisteLaPagina)
+            expect(error).toBeInstanceOf(ErrorReturnPaginaPageIterator)
         }
 
     });
@@ -206,7 +209,7 @@ describe('Escenario 3 - PageIterator - GetNextPage() ', () => {
 
            expect(pageIterator).not.toBeNull();
         } catch (error) {
-            expect(error).toBeInstanceOf(ErrorNoExisteLaPagina)
+            expect(error).toBeInstanceOf(ErrorReturnPaginaPageIterator)
         }
     });
      
@@ -344,7 +347,7 @@ describe('Escenario 5 - PageIterator - Limits ', () => {
         pageIterator.getLastPage();
         
         let getPreviousPage = pageIterator.getPreviousPage(); 
-        let getPreviosPageNumber = pageIterator.getLastPageNumber() - 1;
+        let getPreviosPageNumber = pageIterator.getTotalPageNumber() - 1;
         let PaginationPreviousPage = serviceMock.getContentItemsByFilterPaged(filter, 3, 2, IOrderArray.ASC);
 
 
@@ -352,8 +355,52 @@ describe('Escenario 5 - PageIterator - Limits ', () => {
         expect(getPreviousPage).toEqual(PaginationPreviousPage);
     });
 
+ 
+
 });
+
+describe('Escenario 6 - PageIterator vs ContentManager - Filtering ', () => {
+
+    let contentItemList = [
+        new ContentItem("1 Angular", "1 Aprendiendo Angular", IContentType.Video, ["javascript"]),
+        new ContentItem("2 Angular", "2 Aprendiendo Angular", IContentType.Video, ["typescript"]),
+        new ContentItem("3 Angular", "3 Aprendiendo Angular", IContentType.Article, ["typescript"]),
+        new ContentItem("4 Angular", "4 Aprendiendo Angular", IContentType.Pdf, ["react"]),
+    ]
     
+    let serviceMock = new ContentManagerServiceMock(contentItemList);
+    
+    /**
+    * ? Filter con titulo mock y type video. 
+    */
+    test('Caso 6.1- getContentItemsByFilterPaged - .', () => {
+       
+        let filter = new ContentItemFilter();
+            filter.tags = ["javascript"];
+        
+        
+        let response = serviceMock.getContentItemsByFilterPaged(filter, 1, 3, IOrderArray.ASC);
+        
+        customLogger.logDebug(`Filter 6.1 - serviceMockFilter => ${JSON.stringify(filter, null, 2)}`)
+        expect(response).toHaveLength(1);
+
+
+    });
+
+     test('Caso 6.2- PageIterator ', () => {
+       
+        let filter = new ContentItemFilter();
+         filter.tags = ["typescript"];
+         filter.contentType = IContentType.Article;
+        
+        let pageIterator = new PageIterator(serviceMock, filter, 3, IOrderArray.ASC).getFirstPage()
+         
+        
+        customLogger.logDebug(`Filter 6.2 - PageIterator => ${JSON.stringify(filter, null, 2)}`)
+        expect(pageIterator).toHaveLength(1);
+    });
+
+});
 
 
 

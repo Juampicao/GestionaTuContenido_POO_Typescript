@@ -5,7 +5,7 @@ export interface IContentManagerService{
     
     /**
      * 
-     * @param filter: ContentItemFilter => Busqueda especifica segun filtros
+     * @param filter: ContentItemFilter. Busqueda especifica segun filtros
      */
     getContentsItemsByFilter(filter : ContentItemFilter): ContentItem[];
 
@@ -19,9 +19,13 @@ export interface IContentManagerService{
      */
     getContentItemsByFilterPaged(filter: ContentItemFilter, page: number, limit: number, order: any): ContentItem[] 
 
-
+    /**
+    * @param filter: busqueda por un filtro especifico.
+    * @returns Cantidad total de items coincidentes con este filtro.
+    */
     getTotalCuantityContentItems(filter:ContentItemFilter): number;
 }
 
+//Todo hoy Cambiar el nombre cuantity por quantity, basta de spanglish.
 
 

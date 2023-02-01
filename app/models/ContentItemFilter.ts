@@ -34,9 +34,12 @@ export class ContentItemFilter {
         this._fechaCreacionSince = FechaCreacionSinceDefault;
         this._fechaCreacionUntil = FechaCreacionUntilDefault;
     }
-
-    //* Title
-    set title(title: string) {
+    
+    /**
+     * Setear el titulo del filtro.
+     * @param title: Titulo
+     */
+    public set title(title: string) {
         
         // RegEx 3 letters minimum.
         let RegEx3Letters: RegExp = /(.*[a-z]){3}/i;
@@ -54,12 +57,18 @@ export class ContentItemFilter {
 
     }
 
-    get title() : string {
+     /**
+     * @return title del filtro .
+     */
+    public get title() : string {
         return this._title.toLowerCase();
     }
 
-    //* Title or Description
-    set titleOrDescription(titleOrDescription: string) {
+    /**
+     * Setea el titulo o descripcion del filtro.
+     * @param titleOrDescription : El titulo o la descripcion pueden ser ingresadas.
+     */
+    public set titleOrDescription(titleOrDescription: string) {
           let RegEx3Letters: RegExp = /(.*[a-z]){3}/i;
 
         if (RegEx3Letters.test(titleOrDescription)) {
@@ -71,107 +80,142 @@ export class ContentItemFilter {
         }
     }
 
-    get titleOrDescription() : string {
+    /**
+     * @return el titulo o la descripcion del filtro.
+     */
+    public get titleOrDescription() : string {
         return this._titleOrDescription.toLocaleLowerCase();
     }
 
-    //* ContentType
+    /**
+     * Setear el tipo de contenido del filtro
+     * @param contentType Tipo de contenido : IContentType
+     */
     set contentType(contentType: IContentType) {
         this._contentType = contentType;
     }
 
-    get contentType() : IContentType{
+    /**
+     * @return el tipo de contenido del filtro.
+     */
+    public get contentType() : IContentType{
         return this._contentType
     }
 
-    // Tags
-    set tags(tags: string[]) {
+    /**
+     * Setea todos los tags del filtro
+     * @param tags: Array de etiquetas. 
+     */
+    public set tags(tags: string[]) {
         this._tags = tags;
     }
 
-    get tags(): string[] {
+    /**
+     * @return todo el array de etiquetas del filtro.
+     */
+    public get tags(): string[] {
         return this._tags
     }
 
-    // Description
-    set description(description: string) {
+    /**
+     * Setea la descripción del filtro.
+     * @param description descripción del filtro.
+     */
+    public set description(description: string) {
         this._description = description.toLowerCase();
     };
 
-    get description() : string {
+    /**
+     * @return la descripcion del filtro.
+     */
+    public get description() : string {
         return this._description.toLowerCase();
     }
 
     
-    // Duration
     /**
+     * Setea la duración desde, del filtro.
      * ! negativo ! <minDurationSince ! >maxDurationSince>
      * @param durationSince:Duration
      */
-    set durationSince(durationSince: Duration) {
+    public set durationSince(durationSince: Duration) {
         if (durationSince > maxDurationSince || durationSince < minDurationSince) {
             throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minDurationSince} y ${maxDurationSince} `)
         }
         this._durationSince = durationSince
     }
 
-    get durationSince() : Duration {
+    /**
+     * @return la duración desde, del filtro.
+     */
+    public get durationSince() : Duration {
         return this._durationSince;
     }
 
-     /**
-     * ! negativo ! < minDurationUntil ! > maxDurationUntil
-     * @param durationUntil:Duration
-     */
-    set durationUntil(durationUntil: Duration) {
+    /**
+    * Setea la duracion hasta del filtro.
+    * ! negativo ! < minDurationUntil ! > maxDurationUntil
+    * @param durationUntil:Duration
+    */
+    public set durationUntil(durationUntil: Duration) {
           if (durationUntil > maxDurationUntil || durationUntil < minDurationUntil) {
             throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minDurationSince} y ${maxDurationSince} `)
         }
         this._durationUntil = durationUntil
     }
 
-    get durationUntil() : Duration {
+    /**
+     * @return la duracion hasta del filtro.
+     */
+    public get durationUntil() : Duration {
         return this._durationUntil;
     }
 
-    // Rating
     /**
-     * ! < minRatingFilter ! > maxRatingFilter
-     * @param rating:IContentItemRating
-     */
-    set ratingSince(rating: IContentItemRating) {
+    * Setea el rating desde del filtro.      
+    * ! < minRatingFilter ! > maxRatingFilter
+    * @param rating:IContentItemRating
+    */
+    public set ratingSince(rating: IContentItemRating) {
         if (rating > maxRatingFilter || rating < minRatingFilter) {
-            throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minRatingFilter} y ${maxRatingFilter} `)
+            throw new ErrorExternoAlPasarParams(`El rating debe estar entre ${minRatingFilter} y ${maxRatingFilter}. El rating filtrado actual es Desde:${this._ratingSince}  Hasta:${this._ratingUntil}`)
         }
         this._ratingSince = rating; 
     }
 
-    get ratingSince() : IContentItemRating {
+    /**
+     * @return el ratingdesde del filtro.
+     */
+    public get ratingSince() : IContentItemRating {
         return this._ratingSince;
     }
 
     /**
+     * Setea el rating hasta a buscar por el filtro.
      * ! < minRatingFilter ! > maxRatingFilter
      * @param rating:IContentItemRating
      */
-    set ratingUntil(rating: IContentItemRating) {
+    public set ratingUntil(rating: IContentItemRating) {
         if (rating > maxRatingFilter || rating < minRatingFilter) {
-            throw new ErrorExternoAlPasarParams(`La duracion debe estar entre ${minRatingFilter} y ${maxRatingFilter} `)
+            throw new ErrorExternoAlPasarParams(`El rating debe estar entre ${minRatingFilter} y ${maxRatingFilter}. El rating filtrado actual es Desde:${this._ratingSince}  Hasta:${this._ratingUntil}`)
         }
         this._ratingUntil = rating;
     }
 
-    get ratingUntil() : IContentItemRating{
+    /**
+     * @returns el rating hasta del filtro a buscar.
+     */
+    public get ratingUntil() : IContentItemRating{
         return this._ratingUntil;
     }
   
-    // Fecha Creacion
 
     /**
+     * Setea la fecha de creacion desde a buscar por el filtro
      * ! <minFechaCreacionSince ! > maxFechaCreacionSince
-     * @param fechaCreacionSince
+     * @param fechaCreacionSince: Fecha desde.
      */
-    set fechaCreacionSince(fechaCreacionSince: Date) {
+    public set fechaCreacionSince(fechaCreacionSince: Date) {
         
         _customLogger.logDebug(`ContentItemFilter, FechaCreacionSinceParam:${fechaCreacionSince}`)
         if (fechaCreacionSince > maxFechaCreacionSince || fechaCreacionSince < minFechaCreacionSince) {
@@ -180,15 +224,20 @@ export class ContentItemFilter {
         this._fechaCreacionSince = fechaCreacionSince;
     }
 
-    get fechaCreacionSince()  : Date {
+    /**
+     * 
+     * @returns la fecha de creacion desde a buscar por el filtro
+     */
+    public get fechaCreacionSince()  : Date {
         return this._fechaCreacionSince
     }
 
     /**
+     * Setea la fecha de creacion hasta a buscar por el filtro
      * ! <minFechaCreacionUntil ! > maxFechaCreacionUntil
-     * @param fechaCreacionSince
+     * @param fechaCreacionUntil: Fecha hasta a buscar por el filtro.
      */
-    set fechaCreacionUntil(fechaCreacionUntil: Date) {
+    public set fechaCreacionUntil(fechaCreacionUntil: Date) {
 
         _customLogger.logDebug(`ContentItemFilter, FechaCreacionUntilParam:${fechaCreacionUntil}`)
          if (fechaCreacionUntil > maxFechaCreacionUntil || fechaCreacionUntil < minFechaCreacionUntil) {
@@ -197,13 +246,16 @@ export class ContentItemFilter {
         this._fechaCreacionUntil = fechaCreacionUntil;
     }
 
-    get fechaCreacionUntil() : Date {
+    /**
+     * @returns fecha de creacion hasta a abuscar por el filtro.
+     */
+    public get fechaCreacionUntil() : Date {
         return this._fechaCreacionUntil
     }
 
     
     // ToString
-    toString() : string {
+    public toString() : string {
         return `ContentItemFilter: title=${this._title} , description=${this._description}, contentType=${this._contentType}, durationSince=${this._durationSince}, durationUntil=${this._durationUntil}, fechaCreacionSince=${this._fechaCreacionSince}, fechaCreacionUntil=${this._fechaCreacionUntil}, ratingSince=${this._ratingSince}, ratingUntil=${this._ratingUntil}, tags=${this._tags}` 
     }
 

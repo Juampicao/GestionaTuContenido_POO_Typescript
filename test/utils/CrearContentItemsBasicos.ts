@@ -1,7 +1,5 @@
-import { IContentItemRating } from "../../app/interfaces/IContentItemRating";
 import { IContentType } from "../../app/interfaces/IContentType";
 import { ContentItem } from "../../app/models/ContentItem";
-import { Duration } from "../../app/models/Duration";
 
 
 // Todo. Crear varios metodos. crear2Items, crear3Items. Todos mismo lugar. No varios servicios. Inicializar en el construcotr. 
@@ -45,8 +43,6 @@ export class CrearContentItemsBasicos {
     getAllContentItems(): Array<ContentItem>{
         return this._contentItems
     }
-
-
 
 
     /**
