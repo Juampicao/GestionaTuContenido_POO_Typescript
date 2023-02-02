@@ -1,7 +1,7 @@
 import { ErrorExternoAlPasarParams } from "../error/NoHayResultadosError";
 import { IContentItemRating } from "../interfaces/IContentItemRating";
 import { IContentType } from "../interfaces/IContentType";
-import { contentTypeDefault, fechaCreacionDefault, FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxDurationVideo, maxFechaCreacion, maxFechaCreacionSince, maxRatingFilter, minDurationSince, minDurationVideo, minFechaCreacion, minFechaCreacionSince, minRatingFilter, RatingDefault } from "../utils/ConfigurationENV";
+import { contentTypeDefault, durationDefaultContentItem, fechaCreacionDefault, FechaCreacionSinceDefault, FechaCreacionUntilDefault, maxDurationUntil, maxDurationVideo, maxFechaCreacion, maxFechaCreacionSince, maxRatingFilter, minDurationSince, minDurationVideo, minFechaCreacion, minFechaCreacionSince, minRatingFilter, RatingDefault } from "../utils/ConfigurationENV";
 import { CustomLogger } from "../utils/CustomLogger";
 import { Duration } from "./Duration";
 
@@ -27,7 +27,7 @@ export class ContentItem {
      * @param rating ranking personal.
      * @param fechaCreacion fecha que fue creado.
      */
-    constructor(title: string = "",  description: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], duration: Duration = new Duration(), rating: IContentItemRating = RatingDefault,
+    constructor(title: string = "",  description: string = "", contentType: IContentType = contentTypeDefault, tags: Array<string> = [], duration: Duration = durationDefaultContentItem , rating: IContentItemRating = RatingDefault,
         fechaCreacion: Date = fechaCreacionDefault
     ) {
         this._title = title;
@@ -372,7 +372,7 @@ export class ContentItem {
     }
 
     toString(): string {
-        return `ContentItem: Title=${this._title}, ContentType=${this._contentType}, Duration=${this._duration}, fechaCreacion=${this._fechaCreacion}, rating=${this._rating}, tags=${this._tags}, descripcion=${this._description}`
+        return `ContentItem: Title=${this._title}, ContentType=${this._contentType}, Duration=${JSON.stringify(this._duration)}, fechaCreacion=${this._fechaCreacion}, rating=${this._rating}, tags=${this._tags}, descripcion=${this._description}`
     }
 };
 

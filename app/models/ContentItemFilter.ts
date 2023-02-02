@@ -27,10 +27,12 @@ export class ContentItemFilter {
         this._contentType = IContentType.Void;
         this._tags = [];
         this._description = "";
-        this._durationSince = new Duration();
-        this._durationUntil = new Duration();
-        this._ratingSince = IContentItemRating.Void;
-        this._ratingUntil = IContentItemRating.Void;
+        this._durationSince = minDurationSince;
+        this._durationUntil = maxDurationUntil;
+        this._ratingSince = IContentItemRating.Uno;
+        this._ratingUntil = IContentItemRating.Cinco;
+        // this._ratingSince = IContentItemRating.Uno;
+        // this._ratingUntil = IContentItemRating.Cinco;
         this._fechaCreacionSince = FechaCreacionSinceDefault;
         this._fechaCreacionUntil = FechaCreacionUntilDefault;
     }
@@ -256,7 +258,7 @@ export class ContentItemFilter {
     
     // ToString
     public toString() : string {
-        return `ContentItemFilter: title=${this._title} , description=${this._description}, contentType=${this._contentType}, durationSince=${this._durationSince}, durationUntil=${this._durationUntil}, fechaCreacionSince=${this._fechaCreacionSince}, fechaCreacionUntil=${this._fechaCreacionUntil}, ratingSince=${this._ratingSince}, ratingUntil=${this._ratingUntil}, tags=${this._tags}` 
+        return `ContentItemFilter: title=${this._title} , description=${this._description}, contentType=${this._contentType}, durationSince=${JSON.stringify(this._durationSince)}, durationUntil=${JSON.stringify(this._durationUntil)}, fechaCreacionSince=${this._fechaCreacionSince}, fechaCreacionUntil=${this._fechaCreacionUntil}, ratingSince=${this._ratingSince}, ratingUntil=${this._ratingUntil}, tags=${this._tags}` 
     }
 
     // ToDo: Convertilo a json.

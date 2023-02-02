@@ -191,12 +191,9 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
     test('Caso 5.1- DurationSince & DurationUntil', () => {
 
         let filter = new ContentItemFilter();
-        filter.durationSince = new Duration();
-        filter.durationSince.setDuration(0, 1, 10)
-        filter.durationUntil = new Duration();
-        filter.durationUntil.setDuration(0, 3, 20);
+        filter.durationSince = new Duration(0, 1, 10);
+        filter.durationUntil = new Duration(0, 3, 20);
 
-         
         let durationSince = filter.durationSince;
         let durationUntil = filter.durationUntil;
         
@@ -210,13 +207,9 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
 
         try {
             let filter = new ContentItemFilter();
-            filter.durationSince = new Duration()
-            filter.durationSince.setDuration(-1, 10,20);
-            filter.durationUntil = new Duration();
-            filter.durationUntil.setDuration(0, 3, 20)
-
+            filter.durationSince = new Duration(-1, 10,20)
+            filter.durationUntil = new Duration(0, 3, 20);
         } catch (error) {
-          
             expect(error).toBeInstanceOf(ErrorExternoAlPasarParams)
         }      
     })
@@ -225,11 +218,10 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
 
         try {
             let filter = new ContentItemFilter();
-            filter.durationSince = new Duration()
-            filter.durationSince.setDuration(5,10,20);
+            filter.durationSince = new Duration(5,10,20)
         
-             let durationSince = filter.durationSince;
-             expect(durationSince).toBeNull()
+            let durationSince = filter.durationSince;
+            expect(durationSince).toBeNull()
 
         } catch (error) {
             expect(error).toBeInstanceOf(Error)
@@ -241,11 +233,10 @@ describe('Escenario 5 - ContentItemFilter - DURATION ', () => {
 
         try {
             let filter = new ContentItemFilter();
-            filter.durationUntil = new Duration()
-            filter.durationSince.setDuration(3,10,20);
+            filter.durationUntil = new Duration(3,10,20)
         
-             let durationSince = filter.durationSince;
-             expect(durationSince).toBeNull()
+            let durationSince = filter.durationSince;
+            expect(durationSince).toBeNull()
 
         } catch (error) {
             expect(error).toBeInstanceOf(Error)

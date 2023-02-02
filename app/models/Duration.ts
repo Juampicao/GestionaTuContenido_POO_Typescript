@@ -5,10 +5,13 @@ export class Duration {
     private _mm: number;
     private _ss: number;
 
-    constructor() {
-        this._hh = 0
-        this._mm = 0;
-        this._ss = 0;
+    constructor(hh: number = 0, mm: number = 0, ss: number = 0) {
+        this._hh = hh 
+        this._mm = mm 
+        this._ss = ss 
+        // this._hh = 0
+        // this._mm = 0;
+        // this._ss = 0;
     }
 
     /**

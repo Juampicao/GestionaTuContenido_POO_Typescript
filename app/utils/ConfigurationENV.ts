@@ -1,28 +1,23 @@
-import { Duration } from "../models/Duration";
 import { IContentItemRating } from "../interfaces/IContentItemRating";
 import { IContentType } from "../interfaces/IContentType";
+import { Duration } from "../models/Duration";
 
 // - - - - -  DURATION - - - - - //
-//? Duration Video
-export const minDurationVideo: Duration = new Duration()
-minDurationVideo.setDuration(0, 0, 1)
 
-export const maxDurationVideo: Duration = new Duration()
-maxDurationVideo.setDuration(3, 0, 0)
+//? Default Duration contenido si no se le asigna un valor.
+export const durationDefaultContentItem: Duration = new Duration(0,0,1)
+
+//? Duration Video
+export const minDurationVideo: Duration = new Duration(0,0,0)
+export const maxDurationVideo: Duration = new Duration(3, 0, 0)
 
 //? Since
-export const maxDurationSince: Duration = new Duration()
-maxDurationSince.setDuration(3, 0, 0)
-        
-export const minDurationSince: Duration = new Duration()
-minDurationSince.setDuration(0, 0, 1)
+export const minDurationSince: Duration = minDurationVideo
+export const maxDurationSince: Duration = maxDurationVideo
 
 //? Until
-export const maxDurationUntil: Duration = new Duration()
-maxDurationUntil.setDuration(3, 0, 1)
-
-export const minDurationUntil: Duration = new Duration()
-minDurationUntil.setDuration(0, 0, 2)
+export const minDurationUntil: Duration = minDurationVideo
+export const maxDurationUntil: Duration = maxDurationVideo
 
 // - - - - -  RATING - - - - - //
 // ? Rating Default 
